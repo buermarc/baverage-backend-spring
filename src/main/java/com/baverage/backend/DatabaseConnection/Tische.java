@@ -1,4 +1,4 @@
-package DatabaseConnection;
+package com.baverage.backend.DatabaseConnection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,18 +9,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-
-public class Tisch implements Serializable{
+@Getter
+@Setter
+public class Tische implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	
-	@OneToMany (mappedBy="tisch_id")
-	List <Platz> plaetze= new ArrayList<Platz>();
+	@OneToMany (mappedBy="tisch")
+	List <Plaetze> plaetze= new ArrayList<Plaetze>();
 	
 	String name="";
 }
