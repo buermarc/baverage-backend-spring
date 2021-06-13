@@ -19,16 +19,6 @@ import com.baverage.backend.DatabaseConnection.Bestellungen;
 //@RepositoryRestResource
 @org.springframework.stereotype.Repository
 public interface BestellungRepo extends CrudRepository<Bestellungen, Integer>{
-    /*
-    @Query("SELECT NEW com.baverage.backend.DatabaseConnection.AktiveBestellung(b.id, platz.tisch.id, get.name, get.groesse) FROM Bestellungen b INNER JOIN b.getraenk get ON b.getraenk = get.id INNER JOIN b.platz platz ON b.platz = platz.id WHERE b.status = 1 ") 
-    Collection<AktiveBestellung> getAktiveBestellungen();
-
-    @Query("SELECT NEW com.baverage.backend.DatabaseConnection.Bestellungen(b.id, b.zeitpunkt_bestellt, b.zeitpunkt_vorbereitet, b.zeitpunkt_angekommen, b.zeitpunkt_leergetrunken, b.initialgewicht) FROM Bestellungen b") 
-    Collection<Bestellungen> getAlleBestellungen();
-
-    @Query(value = "SELECT bestellungen.id, bestellungen.getraenk_id FROM bestellungen INNER JOIN getraenke ON bestellungen.getraenk_id = getraenke.id", nativeQuery = true) 
-    Collection<Bestellungen> getID();
-    */
     @Query("SELECT NEW com.baverage.backend.DatabaseConnection.AktiveBestellung(b.id, platz.tisch.id, get.name, get.groesse) FROM Bestellungen b INNER JOIN b.getraenk get ON b.getraenk = get.id INNER JOIN b.platz platz ON b.platz = platz.id WHERE b.status = 1 ") 
     Collection<AktiveBestellung> getAktiveBestellungen();
 
