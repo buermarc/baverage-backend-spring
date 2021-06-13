@@ -8,5 +8,5 @@ spring.datasource.username: iot2
 spring.datasource.password: 1234
 spring.datasource.driverClassName: com.mysql.cj.jdbc.Driver
 spring.jpa.database-platform : org.hibernate.dialect.MySQL5Dialect
-#spring.jpa.generate-ddl: true
+spring.jpa.generate-ddl: true
 spring.jpa.hibernate.ddl-auto : update
