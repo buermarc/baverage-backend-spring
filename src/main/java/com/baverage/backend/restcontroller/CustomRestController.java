@@ -8,12 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.util.HtmlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Date;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -24,10 +29,13 @@ import com.baverage.backend.repo.TestTableRepo;
 import com.baverage.backend.dto.OffeneBestellung;
 import com.baverage.backend.DatabaseConnection.Bestellungen;
 import com.baverage.backend.DatabaseConnection.TestTable;
+import com.baverage.backend.dto.IdClass;
 
 @Controller
 @RequestMapping(path="/api")
 public class CustomRestController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomRestController.class);
 
     @Autowired
     private BestellungRepo repo;
@@ -84,5 +92,12 @@ public class CustomRestController {
       // This returns a JSON or XML with the users
       return this.testTableRepo.getAllTables();
     }
-}
 
+    @PostMapping(path = "/setBestellungsStatusVorbereitet", consumes = "application/json")
+    public @ResponseBody String setBestellungsStatusVorbereitet(@RequestBody IdClass idClass) {
+        // This returns a JSON or XML with the users
+        this.repo.setBestellungsStatusVorbereitet(idClass.getBestellungs_id(), new Date());
+
+        return "setBestellungsStatusVorbereitet erfolgreich";
+    }
+}

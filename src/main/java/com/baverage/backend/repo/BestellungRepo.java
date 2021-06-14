@@ -5,8 +5,13 @@ package com.baverage.backend.repo;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Date;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.Query;
+//import org.springframework.web.servlet.tags.Param;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.repository.CrudRepository;
 //import org.springframework.data.repository.repository.Repository;
 
@@ -27,4 +32,9 @@ public interface BestellungRepo extends CrudRepository<Bestellungen, Integer>{
 
     @Query("SELECT b FROM Bestellungen b WHERE b.id = 1")
     Collection<Bestellungen> getID();
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Bestellungen b set b.status = 2, b.zeitpunkt_vorbereitet = :dateNow WHERE b.id = :bestellungs_id")
+    int setBestellungsStatusVorbereitet(@Param("bestellungs_id") int bestellungs_id, @Param("dateNow") Date dateNow);
 }
