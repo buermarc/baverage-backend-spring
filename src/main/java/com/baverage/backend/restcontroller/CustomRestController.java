@@ -21,7 +21,7 @@ import java.lang.Iterable;
 
 import com.baverage.backend.repo.BestellungRepo;
 import com.baverage.backend.repo.TestTableRepo;
-import com.baverage.backend.DatabaseConnection.AktiveBestellung;
+import com.baverage.backend.dto.OffeneBestellung;
 import com.baverage.backend.DatabaseConnection.Bestellungen;
 import com.baverage.backend.DatabaseConnection.TestTable;
 
@@ -35,9 +35,9 @@ public class CustomRestController {
     @Autowired
     private TestTableRepo testTableRepo;
 
-    @GetMapping(value="/getAktiveBestellungen")
-    public @ResponseBody Iterable<AktiveBestellung> aktiveBestellungen(Model model) {
-        return this.repo.getAktiveBestellungen();
+    @GetMapping(value = "/getOffeneBestellungen")
+    public @ResponseBody Iterable<OffeneBestellung> aktiveBestellungen(Model model) {
+        return this.repo.getOffeneBestellungen();
     }
 
     @GetMapping(value="/getAlleBestellungen")

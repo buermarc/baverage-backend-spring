@@ -38,10 +38,10 @@ public class Bestellungen implements Serializable{
 	
 	Date zeitpunkt_vorbereitet;
 	
-	Date zeitpunkt_angekommen;
-	
-	Date zeitpunkt_leergetrunken;
-	
+        Date zeitpunkt_geliefert;
+
+        Date zeitpunkt_aufgetrunken;
+
 	double initialgewicht;
 	
 	@ManyToOne 
@@ -69,12 +69,12 @@ public class Bestellungen implements Serializable{
 	@JsonManagedReference
 	List <Messpunkte> messpunkte= new ArrayList <Messpunkte> ();
 
-        public Bestellungen(int id, Date zeitpunkt_bestellt, Date zeitpunkt_vorbereitet, Date zeitpunkt_angekommen, Date zeitpunkt_leergetrunken, double initialgewicht) {
+        public Bestellungen(int id, Date zeitpunkt_bestellt, Date zeitpunkt_vorbereitet, Date zeitpunkt_geliefert, Date zeitpunkt_aufgetrunken, double initialgewicht) {
             this.id = id;
             this.zeitpunkt_bestellt = zeitpunkt_bestellt;
             this.zeitpunkt_vorbereitet = zeitpunkt_vorbereitet;
-            this.zeitpunkt_angekommen = zeitpunkt_angekommen;
-            this.zeitpunkt_leergetrunken = zeitpunkt_leergetrunken;
+            this.zeitpunkt_geliefert = zeitpunkt_geliefert;
+            this.zeitpunkt_aufgetrunken = zeitpunkt_aufgetrunken;
             this.initialgewicht = initialgewicht;
         }
 

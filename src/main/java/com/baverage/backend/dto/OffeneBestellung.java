@@ -1,8 +1,7 @@
-package com.baverage.backend.DatabaseConnection;
+package com.baverage.backend.dto;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Data;
@@ -14,14 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Data
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AktiveBestellung implements Serializable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OffeneBestellung implements Serializable{
     int id;
     int tisch_id;
     String getraenkname;

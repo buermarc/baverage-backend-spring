@@ -3,9 +3,11 @@ INSERT INTO tische(name) VALUES ("TISCH A");
 INSERT INTO tische(name) VALUES ("TISCH B");
 INSERT INTO tische(name) VALUES ("TISCH C");
 
-INSERT INTO stati(bezeichnung) VALUES ("AKTIV");
+INSERT INTO stati(bezeichnung) VALUES ("BESTELLT");
+INSERT INTO stati(bezeichnung) VALUES ("VORBEREIT");
+INSERT INTO stati(bezeichnung) VALUES ("GELIEFERT");
+INSERT INTO stati(bezeichnung) VALUES ("AUFGETRUNKEN");
 INSERT INTO stati(bezeichnung) VALUES ("ABGEBROCHEN");
-INSERT INTO stati(bezeichnung) VALUES ("BEENDET");
 
 INSERT INTO getraenke(name, groesse, preis, alkoholgehalt) VALUES ("COLA", 0500, 2.50, 0.0);
 INSERT INTO getraenke(name, groesse, preis, alkoholgehalt) VALUES ("FANTA", 0500, 2.50, 0.0);
@@ -41,8 +43,8 @@ INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ E",3);
 INSERT INTO bestellungen(
     zeitpunkt_bestellt,
     zeitpunkt_vorbereitet,
-    zeitpunkt_angekommen,
-    zeitpunkt_leergetrunken,
+    zeitpunkt_geliefert,
+    zeitpunkt_aufgetrunken,
     initialgewicht,
     platz_id,
     getraenk_id,
@@ -65,8 +67,8 @@ INSERT INTO bestellungen(
 INSERT INTO bestellungen(
     zeitpunkt_bestellt,
     zeitpunkt_vorbereitet,
-    zeitpunkt_angekommen,
-    zeitpunkt_leergetrunken,
+    zeitpunkt_geliefert,
+    zeitpunkt_aufgetrunken,
     initialgewicht,
     platz_id,
     getraenk_id,
@@ -89,8 +91,8 @@ INSERT INTO bestellungen(
 INSERT INTO bestellungen(
     zeitpunkt_bestellt,
     zeitpunkt_vorbereitet,
-    zeitpunkt_angekommen,
-    zeitpunkt_leergetrunken,
+    zeitpunkt_geliefert,
+    zeitpunkt_aufgetrunken,
     initialgewicht,
     platz_id,
     getraenk_id,
@@ -113,8 +115,8 @@ INSERT INTO bestellungen(
 INSERT INTO bestellungen(
     zeitpunkt_bestellt,
     zeitpunkt_vorbereitet,
-    zeitpunkt_angekommen,
-    zeitpunkt_leergetrunken,
+    zeitpunkt_geliefert,
+    zeitpunkt_aufgetrunken,
     initialgewicht,
     platz_id,
     getraenk_id,

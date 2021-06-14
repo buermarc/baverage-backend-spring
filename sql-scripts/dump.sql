@@ -17,22 +17,6 @@ use app;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `aktive_bestellung`
---
-
-DROP TABLE IF EXISTS `aktive_bestellung`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `aktive_bestellung` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `getraengroesse` int NOT NULL,
-  `getraenkname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tisch_id` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `bestellungen`
 --
 
@@ -42,9 +26,9 @@ DROP TABLE IF EXISTS `bestellungen`;
 CREATE TABLE `bestellungen` (
   `id` int NOT NULL AUTO_INCREMENT,
   `initialgewicht` double NOT NULL,
-  `zeitpunkt_angekommen` datetime DEFAULT NULL,
+  `zeitpunkt_aufgetrunken` datetime DEFAULT NULL,
   `zeitpunkt_bestellt` datetime DEFAULT NULL,
-  `zeitpunkt_leergetrunken` datetime DEFAULT NULL,
+  `zeitpunkt_geliefert` datetime DEFAULT NULL,
   `zeitpunkt_vorbereitet` datetime DEFAULT NULL,
   `getraenk_id` int DEFAULT NULL,
   `glas_id` int DEFAULT NULL,
@@ -101,7 +85,10 @@ DROP TABLE IF EXISTS `kunden`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `kunden` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `bezahlt` tinyint(1) DEFAULT '0',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zeitpunkt_abgeschlossen` datetime DEFAULT NULL,
+  `zeitpunkt_angelegt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -168,21 +155,6 @@ CREATE TABLE `stati` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `stati_bestellungen`
---
-
-DROP TABLE IF EXISTS `stati_bestellungen`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `stati_bestellungen` (
-  `stati_id` int NOT NULL,
-  `bestellungen_id` int NOT NULL,
-  UNIQUE KEY `UK_mys6am86mgwaqbsgfd75wkl26` (`bestellungen_id`),
-  KEY `FK3odh7uan0vp1n0kty1dh4x1pr` (`stati_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `test_table`
 --
 
@@ -219,4 +191,4 @@ CREATE TABLE `tische` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-13 13:13:16
+-- Dump completed on 2021-06-14 17:15:49
