@@ -32,7 +32,7 @@ import com.baverage.backend.DatabaseConnection.TestTable;
 import com.baverage.backend.dto.IdClass;
 
 @Controller
-@RequestMapping(path="/api")
+@RequestMapping(path = "/api")
 public class CustomRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomRestController.class);
@@ -48,36 +48,35 @@ public class CustomRestController {
         return this.repo.getOffeneBestellungen();
     }
 
-    @GetMapping(value="/getAlleBestellungen")
+    @GetMapping(value = "/getAlleBestellungen")
     public @ResponseBody Iterable<Bestellungen> alleBestellungen(Model model) {
         return this.repo.findAll();
     }
 
-    @GetMapping(value="/getID")
+    @GetMapping(value = "/getID")
     public @ResponseBody Iterable<Bestellungen> getID(Model model) {
         return this.repo.getID();
     }
 
-    @GetMapping(path="/all")
+    @GetMapping(path = "/all")
     public @ResponseBody Iterable<TestTable> getAll() {
-      // This returns a JSON or XML with the users
-      return this.testTableRepo.findAll();
+        // This returns a JSON or XML with the users
+        return this.testTableRepo.findAll();
     }
 
-    @GetMapping(path="/one")
+    @GetMapping(path = "/one")
     public @ResponseBody TestTable getOne() {
-      // This returns a JSON or XML with the users
-      try {
-          return this.testTableRepo.findById(1).get();
-      }
-      catch (NoSuchElementException e) {
-          System.err.println(e);
-      }
-      return new TestTable(1, "test");
+        // This returns a JSON or XML with the users
+        try {
+            return this.testTableRepo.findById(1).get();
+        } catch (NoSuchElementException e) {
+            System.err.println(e);
+        }
+        return new TestTable(1, "test");
     }
-    
-      @PostMapping(path="/add") // Map ONLY POST Requests
-      public @ResponseBody String addNewUser (@RequestParam String name) {
+
+    @PostMapping(path = "/add") // Map ONLY POST Requests
+    public @ResponseBody String addNewUser(@RequestParam String name) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
 
@@ -85,12 +84,12 @@ public class CustomRestController {
         n.setName(name);
         testTableRepo.save(n);
         return "Saved";
-  }
+    }
 
-    @GetMapping(path="/allTables")
+    @GetMapping(path = "/allTables")
     public @ResponseBody Collection<TestTable> getAllTables() {
-      // This returns a JSON or XML with the users
-      return this.testTableRepo.getAllTables();
+        // This returns a JSON or XML with the users
+        return this.testTableRepo.getAllTables();
     }
 
     @PostMapping(path = "/setBestellungsStatusVorbereitet", consumes = "application/json")
