@@ -4,7 +4,7 @@ INSERT INTO tische(name) VALUES ("TISCH B");
 INSERT INTO tische(name) VALUES ("TISCH C");
 
 INSERT INTO stati(bezeichnung) VALUES ("BESTELLT");
-INSERT INTO stati(bezeichnung) VALUES ("VORBEREIT");
+INSERT INTO stati(bezeichnung) VALUES ("VORBEREITET");
 INSERT INTO stati(bezeichnung) VALUES ("GELIEFERT");
 INSERT INTO stati(bezeichnung) VALUES ("AUFGETRUNKEN");
 INSERT INTO stati(bezeichnung) VALUES ("ABGEBROCHEN");
