@@ -29,6 +29,7 @@ import com.baverage.backend.repo.TestTableRepo;
 import com.baverage.backend.dto.OffeneBestellung;
 import com.baverage.backend.DatabaseConnection.Bestellungen;
 import com.baverage.backend.DatabaseConnection.TestTable;
+import com.baverage.backend.DatabaseConnection.Stati;
 import com.baverage.backend.dto.IdClass;
 
 @Controller
@@ -95,7 +96,7 @@ public class CustomRestController {
     @PostMapping(path = "/setBestellungsStatusVorbereitet", consumes = "application/json")
     public @ResponseBody String setBestellungsStatusVorbereitet(@RequestBody IdClass idClass) {
         // This returns a JSON or XML with the users
-        this.repo.setBestellungsStatusVorbereitet(idClass.getBestellungs_id(), new Date());
+        this.repo.setBestellungsStatusVorbereitet(idClass.getBestellungs_id(), new Date(), Stati.Status.VORBEREITET.getId());
 
         return "setBestellungsStatusVorbereitet erfolgreich";
     }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,15 +21,31 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Getter
 @Setter
-public class Stati implements Serializable{
+public class Stati implements Serializable {
 
-	@Id 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
-	
-	String bezeichnung="";
-	
-	@OneToMany (mappedBy = "status")
-        @JsonBackReference
-	List<Bestellungen> bestellungen;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
+
+    String bezeichnung = "";
+
+    @OneToMany(mappedBy = "status")
+    @JsonBackReference
+    List<Bestellungen> bestellungen;
+
+    public enum Status {
+
+        BESTELLT(1), VORBEREITET(2), GELIEFERT(3), AUFGETRUNKEN(4), ABGERBROCHEN(5);
+
+        private final int id;
+
+        private Status(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return this.id;
+        }
+    }
+
 }

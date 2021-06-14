@@ -35,6 +35,6 @@ public interface BestellungRepo extends CrudRepository<Bestellungen, Integer>{
 
     @Modifying
     @Transactional
-    @Query("UPDATE Bestellungen b set b.status = 2, b.zeitpunkt_vorbereitet = :dateNow WHERE b.id = :bestellungs_id")
-    int setBestellungsStatusVorbereitet(@Param("bestellungs_id") int bestellungs_id, @Param("dateNow") Date dateNow);
+    @Query("UPDATE Bestellungen b set b.status.id = :status_id, b.zeitpunkt_vorbereitet = :dateNow WHERE b.id = :bestellungs_id")
+    int setBestellungsStatusVorbereitet(@Param("bestellungs_id") int bestellungs_id, @Param("dateNow") Date dateNow, @Param("status_id") int status_id);
 }
