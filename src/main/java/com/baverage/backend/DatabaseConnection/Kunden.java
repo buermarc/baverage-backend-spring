@@ -2,6 +2,7 @@ package com.baverage.backend.DatabaseConnection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Data;
@@ -36,7 +38,14 @@ public class Kunden implements Serializable {
 	@OneToMany(mappedBy="kunde")
         @JsonBackReference
 	private List <Bestellungen> bestellungen= new ArrayList <Bestellungen>();
+
+        Date zeitpunkt_angelegt;
+
+        Date zeitpunkt_abgeschlossen;
 	
     @NotNull
     private String name = "";
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean bezahlt;
 }
