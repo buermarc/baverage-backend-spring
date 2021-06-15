@@ -25,10 +25,15 @@ import java.util.NoSuchElementException;
 import java.lang.Iterable;
 
 import com.baverage.backend.repo.BestellungRepo;
+import com.baverage.backend.repo.GetraenkRepo;
 import com.baverage.backend.repo.TestTableRepo;
+import com.baverage.backend.repo.TischRepo;
+import com.mysql.cj.log.Log;
 import com.baverage.backend.dto.OffeneBestellung;
 import com.baverage.backend.DatabaseConnection.Bestellungen;
+import com.baverage.backend.DatabaseConnection.Getraenke;
 import com.baverage.backend.DatabaseConnection.TestTable;
+import com.baverage.backend.DatabaseConnection.Tische;
 import com.baverage.backend.DatabaseConnection.Stati;
 import com.baverage.backend.dto.IdClass;
 
@@ -40,6 +45,12 @@ public class CustomRestController {
 
     @Autowired
     private BestellungRepo repo;
+    
+    @Autowired
+    private TischRepo tischRepo;
+    
+    @Autowired
+    private GetraenkRepo getraenkRepo;
 
     @Autowired
     private TestTableRepo testTableRepo;
@@ -49,6 +60,51 @@ public class CustomRestController {
         return this.repo.getOffeneBestellungen();
     }
 
+    @PostMapping(path = "/setBestellungsStatusVorbereitet", consumes = "application/json")
+    public @ResponseBody String setBestellungsStatusVorbereitet(@RequestBody IdClass idClass) {
+        // This returns a JSON or XML with the users
+        this.repo.setBestellungsStatusVorbereitet(idClass.getBestellungs_id(), new Date(), Stati.Status.VORBEREITET.getId());
+
+        return "setBestellungsStatusVorbereitet erfolgreich";
+    }
+    
+    @GetMapping(value = "/isGeliefert")
+    public @ResponseBody boolean isGeliefert(@RequestParam int id) {
+        // This returns a JSON or XML with the users
+    	try {
+    		return (this.repo.getStatusForBestellung(id)== Stati.Status.GELIEFERT.getId());
+    	} catch (Exception e) {
+    		LOGGER.error("Bestellung mit der ID {} sehr wahrscheinlich noch nicht erstellt", id );
+    		return false;
+    	}
+    	
+    }
+    
+    @GetMapping(value="/getTisch")
+    public @ResponseBody Tische getTisch(@RequestParam int id) {
+    		return this.tischRepo.findById(id).orElse(null); 
+    }
+    
+    @GetMapping(value="/getGetraenke")
+    public @ResponseBody Iterable<Getraenke> getGetraenke() {
+    		return this.getraenkRepo.findAll();
+    }
+    
+    @GetMapping(value="/getLieferungen")
+    public @ResponseBody Iterable<Bestellungen> getLieferungen() {
+    	// was ist ne Lieferung -> Status.Vorbereitet für alle Bestellungen eines Tisch
+    	// Datenlayout muss entsprechend vorbereitet sein
+    	// SQL Query die uns das passende zurückgibt
+    	// Übersetzung in JDBC Query-Annotation
+    	// -> business as usual
+    //		return this.getraenkRepo.findAll();
+    	return null;
+    }
+    
+    
+    
+    // funktional unnötig ~ Marc
+    
     @GetMapping(value = "/getAlleBestellungen")
     public @ResponseBody Iterable<Bestellungen> alleBestellungen(Model model) {
         return this.repo.findAll();
@@ -91,13 +147,5 @@ public class CustomRestController {
     public @ResponseBody Collection<TestTable> getAllTables() {
         // This returns a JSON or XML with the users
         return this.testTableRepo.getAllTables();
-    }
-
-    @PostMapping(path = "/setBestellungsStatusVorbereitet", consumes = "application/json")
-    public @ResponseBody String setBestellungsStatusVorbereitet(@RequestBody IdClass idClass) {
-        // This returns a JSON or XML with the users
-        this.repo.setBestellungsStatusVorbereitet(idClass.getBestellungs_id(), new Date(), Stati.Status.VORBEREITET.getId());
-
-        return "setBestellungsStatusVorbereitet erfolgreich";
     }
 }

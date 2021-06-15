@@ -17,6 +17,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.baverage.backend.dto.OffeneBestellung;
 import com.baverage.backend.DatabaseConnection.Bestellungen;
+import com.baverage.backend.DatabaseConnection.Stati.Status;
 
 /**
  * Erlaubt angepasste Export Mappings des Repositories
@@ -37,4 +38,7 @@ public interface BestellungRepo extends CrudRepository<Bestellungen, Integer>{
     @Transactional
     @Query("UPDATE Bestellungen b set b.status.id = :status_id, b.zeitpunkt_vorbereitet = :dateNow WHERE b.id = :bestellungs_id")
     int setBestellungsStatusVorbereitet(@Param("bestellungs_id") int bestellungs_id, @Param("dateNow") Date dateNow, @Param("status_id") int status_id);
+
+    @Query("SELECT b.status.id FROM Bestellungen b WHERE b.id =:id ")
+	int getStatusForBestellung(@Param("id") int id);
 }

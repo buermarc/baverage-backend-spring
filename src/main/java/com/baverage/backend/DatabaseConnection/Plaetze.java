@@ -15,6 +15,8 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Data
@@ -30,10 +32,11 @@ public class Plaetze implements Serializable {
 	
 	
 	@ManyToOne 
-        private Tische tisch;
+	@JsonIgnore
+    private Tische tisch;
 	
 	@OneToMany (mappedBy="platz")
-        @JsonManagedReference
+    @JsonManagedReference
 	private List<Bestellungen> bestellungen;
 	
 	String name="";
