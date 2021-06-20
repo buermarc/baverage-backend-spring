@@ -97,7 +97,7 @@ public class CustomRestController {
     	// SQL Query die uns das passende zurueckgibt
     	// Uebersetzung in JDBC Query-Annotation
     	// -> business as usual
-    	return null;
+    	return this.bestellungRepo.getLieferungen(Stati.Status.VORBEREITET.getId());
     }
     
     

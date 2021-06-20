@@ -42,4 +42,7 @@ public interface BestellungRepo extends CrudRepository<Bestellungen, Integer> {
 
     @Query("SELECT b.status.id FROM Bestellungen b WHERE b.id =:id ")
     int getStatusForBestellung(@Param("id") int id);
+
+    @Query("SELECT b FROM Bestellungen b INNER JOIN b.platz p on b.platz.id = p.id WHERE NOT EXISTS (SELECT ba FROM Bestellungen ba INNER JOIN ba.platz pa ON ba.platz.id = pa.id WHERE ba.status.id = 1 AND pa.tisch.id = p.tisch.id) AND b.status.id = :status_id")
+    Collection<Bestellungen> getLieferungen(@Param("status_id") int status_id);
 }
