@@ -32,6 +32,7 @@ import com.baverage.backend.service.KundeService;
 import com.baverage.backend.repo.TischRepo;
 import com.mysql.cj.log.Log;
 import com.baverage.backend.dto.OffeneBestellung;
+import com.baverage.backend.dto.UpdateQueryResponse;
 import com.baverage.backend.DatabaseConnection.Bestellungen;
 import com.baverage.backend.DatabaseConnection.Kunden;
 import com.baverage.backend.DatabaseConnection.Getraenke;
@@ -72,14 +73,20 @@ public class CustomRestController {
 
     // TODO better error handling if it does not work
     @PostMapping(path = "/setBestellungsStatusVorbereitet", consumes = "application/json")
-    public @ResponseBody String setBestellungsStatusVorbereitet(@RequestBody IdClass idClass) {
+    public @ResponseBody UpdateQueryResponse setBestellungsStatusVorbereitet(@RequestBody IdClass idClass) {
         // This returns a JSON or XML with the users
         int rows = this.bestellungRepo.setBestellungsStatusVorbereitet(idClass.getId(), new Date(), Stati.Status.VORBEREITET.getId());
+        UpdateQueryResponse res = new UpdateQueryResponse();
         if (rows == 1) {
-            return "setBestellungsStatusVorbereitet erfolgreich, rows updated: " + rows;
+            res.setSuccess(true);
+            res.setErrorMessage(null);
+            res.setRowsChanged(rows);
+            return res;
         } else {
-            return "setBestellungsStatusVorbereitet nicht erfolgreich, rows updated: " + rows
-                + "\nEs sollte eigentlich genua eine Zeile geändert werden.";
+            res.setSuccess(false);
+            res.setErrorMessage("setBestellungsStatusVorbereitet nicht erfolgreich. Es sollte eigentlich genau eine Zeile geändert werden (rows != 1)");
+            res.setRowsChanged(rows);
+            return res;
         }
     }
 
@@ -132,14 +139,20 @@ public class CustomRestController {
      *
      * */
     @PostMapping(path = "/setKundeBezahlt", consumes = "application/json")
-    public @ResponseBody String setKundeBezahlt(@RequestBody IdClass idClass) {
+    public @ResponseBody UpdateQueryResponse setKundeBezahlt(@RequestBody IdClass idClass) {
         // This returns a JSON or XML with the users
         int rows = this.kundeRepo.setKundeBezahlt(idClass.getId());
+        UpdateQueryResponse res = new UpdateQueryResponse();
         if (rows == 1) {
-            return "setKundeBezahlt erfolgreich, rows updated: " + rows;
+            res.setSuccess(true);
+            res.setErrorMessage(null);
+            res.setRowsChanged(rows);
+            return res;
         } else {
-            return "setKundeBezahlt nicht erfolgreich, rows updated: " + rows
-                + "\nEs sollte eigentlich genua eine Zeile geändert werden.";
+            res.setSuccess(false);
+            res.setErrorMessage("setKundeBezahlt nicht erfolgreich. Es sollte eigentlich genau eine Zeile geändert werden (rows != 1)");
+            res.setRowsChanged(rows);
+            return res;
         }
     }
 
