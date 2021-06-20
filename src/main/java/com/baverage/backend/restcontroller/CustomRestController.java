@@ -81,7 +81,8 @@ public class CustomRestController {
     @PostMapping(path = "/setBestellungsStatusVorbereitet", consumes = "application/json")
     public @ResponseBody UpdateQueryResponse setBestellungsStatusVorbereitet(@RequestBody IdClass idClass) {
         // This returns a JSON or XML with the users
-        int rows = this.bestellungRepo.setBestellungsStatusVorbereitet(idClass.getId(), new Date(), Stati.Status.VORBEREITET.getId());
+        int rows = this.bestellungRepo.setBestellungsStatusVorbereitet(idClass.getId(), new Date(),
+                Stati.Status.VORBEREITET.getId());
         UpdateQueryResponse res = new UpdateQueryResponse();
         if (rows == 1) {
             res.setSuccess(true);
@@ -90,7 +91,8 @@ public class CustomRestController {
             return res;
         } else {
             res.setSuccess(false);
-            res.setErrorMessage("setBestellungsStatusVorbereitet nicht erfolgreich. Es sollte eigentlich genau eine Zeile geändert werden (rows != 1)");
+            res.setErrorMessage(
+                    "setBestellungsStatusVorbereitet nicht erfolgreich. Es sollte eigentlich genau eine Zeile geändert werden (rows != 1)");
             res.setRowsChanged(rows);
             return res;
         }
@@ -99,28 +101,28 @@ public class CustomRestController {
     @GetMapping(value = "/isGeliefert")
     public @ResponseBody boolean isGeliefert(@RequestParam int id) {
         // This returns a JSON or XML with the users
-    	try {
-    		return (this.bestellungRepo.getStatusForBestellung(id)== Stati.Status.GELIEFERT.getId());
-    	} catch (Exception e) {
-    		LOGGER.error("Bestellung mit der ID {} sehr wahrscheinlich noch nicht erstellt", id );
-    		return false;
-    	}
-    	
+        try {
+            return (this.bestellungRepo.getStatusForBestellung(id) == Stati.Status.GELIEFERT.getId());
+        } catch (Exception e) {
+            LOGGER.error("Bestellung mit der ID {} sehr wahrscheinlich noch nicht erstellt", id);
+            return false;
+        }
+
     }
 
-    @GetMapping(value="/getTisch")
+    @GetMapping(value = "/getTisch")
     public @ResponseBody Tische getTisch(@RequestParam int id) {
-    		return this.tischRepo.findById(id).orElse(null);
+        return this.tischRepo.findById(id).orElse(null);
     }
 
-    @GetMapping(value="/getGetraenke")
+    @GetMapping(value = "/getGetraenke")
     public @ResponseBody Iterable<Getraenke> getGetraenke() {
-    		return this.getraenkRepo.findAll();
+        return this.getraenkRepo.findAll();
     }
 
-    @GetMapping(value="/getLieferungen")
+    @GetMapping(value = "/getLieferungen")
     public @ResponseBody Iterable<Bestellungen> getLieferungen() {
-    	return this.bestellungRepo.getLieferungen(Stati.Status.VORBEREITET.getId());
+        return this.bestellungRepo.getLieferungen(Stati.Status.VORBEREITET.getId());
     }
 
     /**
@@ -130,20 +132,19 @@ public class CustomRestController {
      * @param {@link CreateUserRequest}
      * @return {@link Kunden}
      *
-     * */
+     */
     @PostMapping(path = "/createKunde", consumes = "application/json")
     public @ResponseBody Kunden createKunde(@RequestBody CreateUserRequest createUserRequest) {
         // This returns a JSON or XML with the users
         return this.kundeService.createKunde(createUserRequest.getName());
-        //return "createKunde erfolgreich, return value: " + ret;
+        // return "createKunde erfolgreich, return value: " + ret;
     }
 
     /**
-     * Sets the bezahlt member variable of an kunde with the given kunde_id
-     * to true.
+     * Sets the bezahlt member variable of an kunde with the given kunde_id to true.
      * Takes a JSON Object with the id of the kunde { "id": 42 }.
      *
-     * */
+     */
     @PostMapping(path = "/setKundeBezahlt", consumes = "application/json")
     public @ResponseBody UpdateQueryResponse setKundeBezahlt(@RequestBody IdClass idClass) {
         // This returns a JSON or XML with the users
@@ -156,7 +157,8 @@ public class CustomRestController {
             return res;
         } else {
             res.setSuccess(false);
-            res.setErrorMessage("setKundeBezahlt nicht erfolgreich. Es sollte eigentlich genau eine Zeile geändert werden (rows != 1)");
+            res.setErrorMessage(
+                    "setKundeBezahlt nicht erfolgreich. Es sollte eigentlich genau eine Zeile geändert werden (rows != 1)");
             res.setRowsChanged(rows);
             return res;
         }
