@@ -30,7 +30,6 @@ public class Tische implements Serializable{
 	int id;
 	
 	@OneToMany (mappedBy="tisch")
-	
 	List <Plaetze> plaetze= new ArrayList<Plaetze>();
 	
 	String name="";
