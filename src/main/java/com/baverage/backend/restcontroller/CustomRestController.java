@@ -92,18 +92,17 @@ public class CustomRestController {
     
     @GetMapping(value="/getLieferungen")
     public @ResponseBody Iterable<Bestellungen> getLieferungen() {
-    	// was ist ne Lieferung -> Status.Vorbereitet für alle Bestellungen eines Tisch
+    	// was ist ne Lieferung -> Status.Vorbereitet fuer alle Bestellungen eines Tisch
     	// Datenlayout muss entsprechend vorbereitet sein
-    	// SQL Query die uns das passende zurückgibt
-    	// Übersetzung in JDBC Query-Annotation
+    	// SQL Query die uns das passende zurueckgibt
+    	// Uebersetzung in JDBC Query-Annotation
     	// -> business as usual
-    //		return this.getraenkRepo.findAll();
     	return null;
     }
     
     
     
-    // funktional unnötig ~ Marc
+    // funktional unnoetig ~ Marc
     
     @GetMapping(value = "/getAlleBestellungen")
     public @ResponseBody Iterable<Bestellungen> alleBestellungen(Model model) {
