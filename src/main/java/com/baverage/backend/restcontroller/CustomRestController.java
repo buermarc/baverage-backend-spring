@@ -29,9 +29,11 @@ import com.baverage.backend.repo.GetraenkRepo;
 import com.baverage.backend.repo.KundeRepo;
 import com.baverage.backend.repo.TestTableRepo;
 import com.baverage.backend.service.KundeService;
+import com.baverage.backend.service.BestellungService;
 import com.baverage.backend.repo.TischRepo;
 import com.mysql.cj.log.Log;
 import com.baverage.backend.dto.OffeneBestellung;
+import com.baverage.backend.dto.BasicResponse;
 import com.baverage.backend.dto.UpdateQueryResponse;
 import com.baverage.backend.DatabaseConnection.Bestellungen;
 import com.baverage.backend.DatabaseConnection.Kunden;
@@ -41,6 +43,7 @@ import com.baverage.backend.DatabaseConnection.Tische;
 import com.baverage.backend.DatabaseConnection.Stati;
 import com.baverage.backend.dto.CreateUserRequest;
 import com.baverage.backend.dto.IdClass;
+import com.baverage.backend.dto.NewBestellung;
 
 @Controller
 @RequestMapping(path = "/api")
@@ -59,6 +62,9 @@ public class CustomRestController {
 
     @Autowired
     private KundeService kundeService;
+
+    @Autowired
+    private BestellungService bestellungService;
 
     @Autowired
     private GetraenkRepo getraenkRepo;
@@ -156,7 +162,18 @@ public class CustomRestController {
         }
     }
 
-
+    /**
+     * Sets the bezahlt member variable of an kunde with the given kunde_id Create a
+     * new bestellung. to true. Takes a JSON Object with some of the content each
+     * Bestellung needs. { "platz_id": 1, "getraenke_id": 1, "kunde_id": 1 }
+     *
+     */
+    @PostMapping(path = "/createBestellung", consumes = "application/json")
+    public @ResponseBody Bestellungen createBestellung(@RequestBody NewBestellung newBestellung) {
+        // This returns a JSON or XML with the users
+        return this.bestellungService.createBestellung(newBestellung.getPlatz_id(), newBestellung.getGetraenk_id(),
+                Stati.Status.BESTELLT.getId(), newBestellung.getKunde_id());
+    }
 
     // funktional unnoetig ~ Marc
 
