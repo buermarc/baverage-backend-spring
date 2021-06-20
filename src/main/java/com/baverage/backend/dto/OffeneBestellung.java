@@ -7,10 +7,6 @@ import lombok.Setter;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
-import javax.persistence.Id;
 
 @Data
 @Getter
