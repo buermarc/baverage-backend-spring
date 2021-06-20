@@ -92,11 +92,6 @@ public class CustomRestController {
 
     @GetMapping(value="/getLieferungen")
     public @ResponseBody Iterable<Bestellungen> getLieferungen() {
-    	// was ist ne Lieferung -> Status.Vorbereitet fuer alle Bestellungen eines Tisch
-    	// Datenlayout muss entsprechend vorbereitet sein
-    	// SQL Query die uns das passende zurueckgibt
-    	// Uebersetzung in JDBC Query-Annotation
-    	// -> business as usual
     	return this.bestellungRepo.getLieferungen(Stati.Status.VORBEREITET.getId());
     }
 
