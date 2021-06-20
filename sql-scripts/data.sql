@@ -3,6 +3,7 @@ INSERT INTO tische(name) VALUES ("TISCH A");
 INSERT INTO tische(name) VALUES ("TISCH B");
 INSERT INTO tische(name) VALUES ("TISCH C");
 
+
 INSERT INTO stati(bezeichnung) VALUES ("BESTELLT");
 INSERT INTO stati(bezeichnung) VALUES ("VORBEREITET");
 INSERT INTO stati(bezeichnung) VALUES ("GELIEFERT");
@@ -38,7 +39,7 @@ INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ E",2);
 INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ F",2);
 
 INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ G",3);
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ E",3);
+INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ H",3);
 
 INSERT INTO bestellungen(
     zeitpunkt_bestellt,
@@ -140,3 +141,132 @@ INSERT INTO test_table(name) VALUES ("ABCD");
 INSERT INTO test_table(name) VALUES ("CDEF");
 INSERT INTO test_table(name) VALUES ("aoeu");
 INSERT INTO test_table(name) VALUES ("uetnnthue");
+
+INSERT INTO bestellungen(
+    zeitpunkt_bestellt,
+    zeitpunkt_vorbereitet,
+    zeitpunkt_geliefert,
+    zeitpunkt_aufgetrunken,
+    initialgewicht,
+    platz_id,
+    getraenk_id,
+    glas_id,
+    status_id,
+    kunde_id
+) VALUES (
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    650,
+    7,
+    1,
+    6,
+    2,
+    1
+);
+INSERT INTO bestellungen(
+    zeitpunkt_bestellt,
+    zeitpunkt_vorbereitet,
+    zeitpunkt_geliefert,
+    zeitpunkt_aufgetrunken,
+    initialgewicht,
+    platz_id,
+    getraenk_id,
+    glas_id,
+    status_id,
+    kunde_id
+) VALUES (
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    650,
+    8,
+    1,
+    6,
+    2,
+    1
+);
+
+
+
+
+
+INSERT INTO tische(name) VALUES ("TISCH D");
+
+INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ I",4);
+INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ J",4);
+INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ K",4);
+
+INSERT INTO bestellungen(
+    zeitpunkt_bestellt,
+    zeitpunkt_vorbereitet,
+    zeitpunkt_geliefert,
+    zeitpunkt_aufgetrunken,
+    initialgewicht,
+    platz_id,
+    getraenk_id,
+    glas_id,
+    status_id,
+    kunde_id
+) VALUES (
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    650,
+    9,
+    1,
+    6,
+    2,
+    1
+);
+
+INSERT INTO bestellungen(
+    zeitpunkt_bestellt,
+    zeitpunkt_vorbereitet,
+    zeitpunkt_geliefert,
+    zeitpunkt_aufgetrunken,
+    initialgewicht,
+    platz_id,
+    getraenk_id,
+    glas_id,
+    status_id,
+    kunde_id
+) VALUES (
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    650,
+    10,
+    1,
+    6,
+    2,
+    1
+);
+
+INSERT INTO bestellungen(
+    zeitpunkt_bestellt,
+    zeitpunkt_vorbereitet,
+    zeitpunkt_geliefert,
+    zeitpunkt_aufgetrunken,
+    initialgewicht,
+    platz_id,
+    getraenk_id,
+    glas_id,
+    status_id,
+    kunde_id
+) VALUES (
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    '1980-02-01-12:34:56',
+    650,
+    11,
+    1,
+    6,
+    1,
+    1
+);
