@@ -33,8 +33,8 @@ public class Messpunkte implements Serializable{
 	
 	Date zeitpunkt;
 	
-	@OneToMany 
+	@ManyToOne
 	@JsonBackReference
-	private List<Bestellungen> bestellungen;
+	private Bestellungen bestellungen;
 
 }
