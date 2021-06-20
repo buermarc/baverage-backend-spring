@@ -44,7 +44,7 @@ public class CustomRestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomRestController.class);
 
     @Autowired
-    private BestellungRepo repo;
+    private BestellungRepo bestellungRepo;
     
     @Autowired
     private TischRepo tischRepo;
@@ -57,13 +57,13 @@ public class CustomRestController {
 
     @GetMapping(value = "/getOffeneBestellungen")
     public @ResponseBody Iterable<OffeneBestellung> aktiveBestellungen(Model model) {
-        return this.repo.getOffeneBestellungen();
+        return this.bestellungRepo.getOffeneBestellungen();
     }
 
     @PostMapping(path = "/setBestellungsStatusVorbereitet", consumes = "application/json")
     public @ResponseBody String setBestellungsStatusVorbereitet(@RequestBody IdClass idClass) {
         // This returns a JSON or XML with the users
-        this.repo.setBestellungsStatusVorbereitet(idClass.getBestellungs_id(), new Date(), Stati.Status.VORBEREITET.getId());
+        this.bestellungRepo.setBestellungsStatusVorbereitet(idClass.getBestellungs_id(), new Date(), Stati.Status.VORBEREITET.getId());
 
         return "setBestellungsStatusVorbereitet erfolgreich";
     }
@@ -72,7 +72,7 @@ public class CustomRestController {
     public @ResponseBody boolean isGeliefert(@RequestParam int id) {
         // This returns a JSON or XML with the users
     	try {
-    		return (this.repo.getStatusForBestellung(id)== Stati.Status.GELIEFERT.getId());
+    		return (this.bestellungRepo.getStatusForBestellung(id)== Stati.Status.GELIEFERT.getId());
     	} catch (Exception e) {
     		LOGGER.error("Bestellung mit der ID {} sehr wahrscheinlich noch nicht erstellt", id );
     		return false;
@@ -106,12 +106,12 @@ public class CustomRestController {
     
     @GetMapping(value = "/getAlleBestellungen")
     public @ResponseBody Iterable<Bestellungen> alleBestellungen(Model model) {
-        return this.repo.findAll();
+        return this.bestellungRepo.findAll();
     }
 
     @GetMapping(value = "/getID")
     public @ResponseBody Iterable<Bestellungen> getID(Model model) {
-        return this.repo.getID();
+        return this.bestellungRepo.getID();
     }
 
     @GetMapping(path = "/all")
