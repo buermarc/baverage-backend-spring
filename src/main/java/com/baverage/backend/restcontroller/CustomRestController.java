@@ -45,10 +45,10 @@ public class CustomRestController {
 
     @Autowired
     private BestellungRepo bestellungRepo;
-    
+
     @Autowired
     private TischRepo tischRepo;
-    
+
     @Autowired
     private GetraenkRepo getraenkRepo;
 
@@ -67,7 +67,7 @@ public class CustomRestController {
 
         return "setBestellungsStatusVorbereitet erfolgreich";
     }
-    
+
     @GetMapping(value = "/isGeliefert")
     public @ResponseBody boolean isGeliefert(@RequestParam int id) {
         // This returns a JSON or XML with the users
@@ -79,17 +79,17 @@ public class CustomRestController {
     	}
     	
     }
-    
+
     @GetMapping(value="/getTisch")
     public @ResponseBody Tische getTisch(@RequestParam int id) {
-    		return this.tischRepo.findById(id).orElse(null); 
+    		return this.tischRepo.findById(id).orElse(null);
     }
-    
+
     @GetMapping(value="/getGetraenke")
     public @ResponseBody Iterable<Getraenke> getGetraenke() {
     		return this.getraenkRepo.findAll();
     }
-    
+
     @GetMapping(value="/getLieferungen")
     public @ResponseBody Iterable<Bestellungen> getLieferungen() {
     	// was ist ne Lieferung -> Status.Vorbereitet fuer alle Bestellungen eines Tisch
@@ -99,11 +99,11 @@ public class CustomRestController {
     	// -> business as usual
     	return this.bestellungRepo.getLieferungen(Stati.Status.VORBEREITET.getId());
     }
-    
-    
-    
+
+
+
     // funktional unnoetig ~ Marc
-    
+
     @GetMapping(value = "/getAlleBestellungen")
     public @ResponseBody Iterable<Bestellungen> alleBestellungen(Model model) {
         return this.bestellungRepo.findAll();

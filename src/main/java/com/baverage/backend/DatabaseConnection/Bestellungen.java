@@ -44,7 +44,7 @@ public class Bestellungen implements Serializable{
 
 	double initialgewicht;
 	
-	@ManyToOne 
+	@ManyToOne
 	@JsonBackReference
 	Plaetze platz;
 	

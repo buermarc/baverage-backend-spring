@@ -31,7 +31,7 @@ public class Plaetze implements Serializable {
 	int id;
 	
 	
-	@ManyToOne 
+	@ManyToOne
 	@JsonIgnore
     private Tische tisch;
 	

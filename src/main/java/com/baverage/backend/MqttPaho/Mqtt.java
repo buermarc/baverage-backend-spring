@@ -21,7 +21,7 @@ public class Mqtt {
 		
 	client = new MqttClient(
 			"tcp://broker.mqttdashboard.com", UUID.randomUUID().toString());
-			 
+
 			client.setCallback(new MqttCallback() {
 			       public void connectionLost(Throwable throwable) { }
 				
@@ -31,12 +31,12 @@ public class Mqtt {
 			        System.out.println(new String(m.getPayload()));
 					transferDataToDatabase("massBavarage", message);
 			       }
-			 
+
 			       public void deliveryComplete(IMqttDeliveryToken t) { };
 			});
-			 
+
 			client.connect();
-			 
+
 			client.subscribe("massBavarage");
 			
 			return message;
@@ -44,7 +44,7 @@ public class Mqtt {
 	
 	public static void transferDataToDatabase(String topic, String message) throws MqttException{
 		System.out.println("Hallo bin in der methode trandfer");
-		switch (topic) { 
+		switch (topic) {
 			case "massBavarage":
 				System.out.println("Komme ich hier an?");
 				int valOfComma= message.indexOf(",");
