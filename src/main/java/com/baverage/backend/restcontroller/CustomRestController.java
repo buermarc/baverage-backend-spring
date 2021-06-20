@@ -27,14 +27,17 @@ import java.lang.Iterable;
 import com.baverage.backend.repo.BestellungRepo;
 import com.baverage.backend.repo.GetraenkRepo;
 import com.baverage.backend.repo.TestTableRepo;
+import com.baverage.backend.service.KundeService;
 import com.baverage.backend.repo.TischRepo;
 import com.mysql.cj.log.Log;
 import com.baverage.backend.dto.OffeneBestellung;
 import com.baverage.backend.DatabaseConnection.Bestellungen;
+import com.baverage.backend.DatabaseConnection.Kunden;
 import com.baverage.backend.DatabaseConnection.Getraenke;
 import com.baverage.backend.DatabaseConnection.TestTable;
 import com.baverage.backend.DatabaseConnection.Tische;
 import com.baverage.backend.DatabaseConnection.Stati;
+import com.baverage.backend.dto.CreateUserRequest;
 import com.baverage.backend.dto.IdClass;
 
 @Controller
@@ -48,6 +51,9 @@ public class CustomRestController {
 
     @Autowired
     private TischRepo tischRepo;
+
+    @Autowired
+    private KundeService kundeService;
 
     @Autowired
     private GetraenkRepo getraenkRepo;
@@ -94,6 +100,22 @@ public class CustomRestController {
     public @ResponseBody Iterable<Bestellungen> getLieferungen() {
     	return this.bestellungRepo.getLieferungen(Stati.Status.VORBEREITET.getId());
     }
+
+    /**
+     * Takes a JSON object with the name of the new kunde { "name": "Charlie" }.
+     * Returns the newly created kunde.
+     *
+     * @param {@link CreateUserRequest}
+     * @return {@link Kunden}
+     *
+     * */
+    @PostMapping(path = "/createKunde", consumes = "application/json")
+    public @ResponseBody Kunden createKunde(@RequestBody CreateUserRequest createUserRequest) {
+        // This returns a JSON or XML with the users
+        return this.kundeService.createKunde(createUserRequest.getName());
+        //return "createKunde erfolgreich, return value: " + ret;
+    }
+
 
 
 
