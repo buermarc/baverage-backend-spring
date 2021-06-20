@@ -22,10 +22,10 @@ import com.baverage.backend.DatabaseConnection.Stati.Status;
 /**
  * Erlaubt angepasste Export Mappings des Repositories
  */
-//@RepositoryRestResource
+// @RepositoryRestResource
 @org.springframework.stereotype.Repository
-public interface BestellungRepo extends CrudRepository<Bestellungen, Integer>{
-    @Query("SELECT NEW com.baverage.backend.dto.OffeneBestellung(b.id, platz.tisch.id, get.name, get.groesse) FROM Bestellungen b INNER JOIN b.getraenk get ON b.getraenk = get.id INNER JOIN b.platz platz ON b.platz = platz.id WHERE b.status = 1 ") 
+public interface BestellungRepo extends CrudRepository<Bestellungen, Integer> {
+    @Query("SELECT NEW com.baverage.backend.dto.OffeneBestellung(b.id, platz.tisch.id, get.name, get.groesse) FROM Bestellungen b INNER JOIN b.getraenk get ON b.getraenk = get.id INNER JOIN b.platz platz ON b.platz = platz.id WHERE b.status = 1 ")
     Collection<OffeneBestellung> getOffeneBestellungen();
 
     @Query("SELECT b FROM Bestellungen b")
@@ -37,8 +37,9 @@ public interface BestellungRepo extends CrudRepository<Bestellungen, Integer>{
     @Modifying
     @Transactional
     @Query("UPDATE Bestellungen b set b.status.id = :status_id, b.zeitpunkt_vorbereitet = :dateNow WHERE b.id = :bestellungs_id")
-    int setBestellungsStatusVorbereitet(@Param("bestellungs_id") int bestellungs_id, @Param("dateNow") Date dateNow, @Param("status_id") int status_id);
+    int setBestellungsStatusVorbereitet(@Param("bestellungs_id") int bestellungs_id, @Param("dateNow") Date dateNow,
+            @Param("status_id") int status_id);
 
     @Query("SELECT b.status.id FROM Bestellungen b WHERE b.id =:id ")
-	int getStatusForBestellung(@Param("id") int id);
+    int getStatusForBestellung(@Param("id") int id);
 }
