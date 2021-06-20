@@ -26,4 +26,8 @@ import com.baverage.backend.DatabaseConnection.Kunden;
 //@RepositoryRestResource
 @org.springframework.stereotype.Repository
 public interface KundeRepo extends CrudRepository<Kunden, Integer>{
+    @Modifying
+    @Transactional
+    @Query("UPDATE Kunden k set k.bezahlt = true WHERE k.id = :kunde_id")
+    int setKundeBezahlt(@Param("kunde_id") int kunde_id);
 }

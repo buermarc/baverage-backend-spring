@@ -26,6 +26,7 @@ import java.lang.Iterable;
 
 import com.baverage.backend.repo.BestellungRepo;
 import com.baverage.backend.repo.GetraenkRepo;
+import com.baverage.backend.repo.KundeRepo;
 import com.baverage.backend.repo.TestTableRepo;
 import com.baverage.backend.service.KundeService;
 import com.baverage.backend.repo.TischRepo;
@@ -53,6 +54,9 @@ public class CustomRestController {
     private TischRepo tischRepo;
 
     @Autowired
+    private KundeRepo kundeRepo;
+
+    @Autowired
     private KundeService kundeService;
 
     @Autowired
@@ -66,12 +70,17 @@ public class CustomRestController {
         return this.bestellungRepo.getOffeneBestellungen();
     }
 
+    // TODO better error handling if it does not work
     @PostMapping(path = "/setBestellungsStatusVorbereitet", consumes = "application/json")
     public @ResponseBody String setBestellungsStatusVorbereitet(@RequestBody IdClass idClass) {
         // This returns a JSON or XML with the users
-        this.bestellungRepo.setBestellungsStatusVorbereitet(idClass.getBestellungs_id(), new Date(), Stati.Status.VORBEREITET.getId());
-
-        return "setBestellungsStatusVorbereitet erfolgreich";
+        int rows = this.bestellungRepo.setBestellungsStatusVorbereitet(idClass.getId(), new Date(), Stati.Status.VORBEREITET.getId());
+        if (rows == 1) {
+            return "setBestellungsStatusVorbereitet erfolgreich, rows updated: " + rows;
+        } else {
+            return "setBestellungsStatusVorbereitet nicht erfolgreich, rows updated: " + rows
+                + "\nEs sollte eigentlich genua eine Zeile geändert werden.";
+        }
     }
 
     @GetMapping(value = "/isGeliefert")
@@ -116,6 +125,23 @@ public class CustomRestController {
         //return "createKunde erfolgreich, return value: " + ret;
     }
 
+    /**
+     * Sets the bezahlt member variable of an kunde with the given kunde_id
+     * to true.
+     * Takes a JSON Object with the id of the kunde { "id": 42 }.
+     *
+     * */
+    @PostMapping(path = "/setKundeBezahlt", consumes = "application/json")
+    public @ResponseBody String setKundeBezahlt(@RequestBody IdClass idClass) {
+        // This returns a JSON or XML with the users
+        int rows = this.kundeRepo.setKundeBezahlt(idClass.getId());
+        if (rows == 1) {
+            return "setKundeBezahlt erfolgreich, rows updated: " + rows;
+        } else {
+            return "setKundeBezahlt nicht erfolgreich, rows updated: " + rows
+                + "\nEs sollte eigentlich genua eine Zeile geändert werden.";
+        }
+    }
 
 
 
