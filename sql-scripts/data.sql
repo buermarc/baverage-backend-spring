@@ -270,3 +270,12 @@ INSERT INTO bestellungen(
     1,
     1
 );
+
+INSERT INTO messpunkte(fuellstand, zeitpunkt, bestellungen_id)
+VALUES (0.25, '1980-02-01-12:34:56', 1);
+INSERT INTO messpunkte(fuellstand, zeitpunkt, bestellungen_id)
+VALUES (0.2, '1980-02-01-12:34:56', 1);
+INSERT INTO messpunkte(fuellstand, zeitpunkt, bestellungen_id)
+VALUES (0.29, '1980-02-01-12:34:56', 2);
+INSERT INTO messpunkte(fuellstand, zeitpunkt, bestellungen_id)
+VALUES (0.31, '1980-02-01-12:34:56', 3);
