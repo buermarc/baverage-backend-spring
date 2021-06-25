@@ -16,4 +16,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateUserRequest implements Serializable {
     String name;
+    int platz_id;
 }
