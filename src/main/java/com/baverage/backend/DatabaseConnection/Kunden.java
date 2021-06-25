@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Column;
 import lombok.Getter;
@@ -43,6 +44,10 @@ public class Kunden implements Serializable {
 
         Date zeitpunkt_abgeschlossen;
 	
+    @ManyToOne
+    @JsonBackReference
+    private Plaetze platz;
+
     @NotNull
     private String name = "";
 

@@ -40,6 +40,9 @@ public class Plaetze implements Serializable {
 	private List<Bestellungen> bestellungen;
 	
 	String name="";
-	
+
+        @OneToMany(mappedBy="platz")
+        @JsonManagedReference
+        private List<Kunden> kunden;
 
 }
