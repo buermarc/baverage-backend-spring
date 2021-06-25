@@ -178,12 +178,10 @@ public class CustomRestController {
                 Stati.Status.BESTELLT.getId(), newBestellung.getKunde_id());
     }
 
-    /*
     @GetMapping(value = "/getLeerePlaetze")
     public @ResponseBody Iterable<EmptySeat> getLeerePlaetze(Model model) {
         return this.bestellungRepo.getLeerePlaetze();
     }
-    */
 
 
     // funktional unnoetig ~ Marc

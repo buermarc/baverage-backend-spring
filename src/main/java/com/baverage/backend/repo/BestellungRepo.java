@@ -47,8 +47,6 @@ public interface BestellungRepo extends CrudRepository<Bestellungen, Integer> {
     @Query("SELECT b FROM Bestellungen b INNER JOIN b.platz p on b.platz.id = p.id WHERE NOT EXISTS (SELECT ba FROM Bestellungen ba INNER JOIN ba.platz pa ON ba.platz.id = pa.id WHERE ba.status.id = 1 AND pa.tisch.id = p.tisch.id) AND b.status.id = :status_id")
     Collection<Bestellungen> getLieferungen(@Param("status_id") int status_id);
 
-    /*
-    @Query("select new com.baverage.backend.dto.EmptySeat( b.id, p.tisch.id, b.platz.id, ( select count(*) from b.platz pl where pl.tisch.id = p.tisch.id group by p.tisch.id) as tische_anzahl, m.fuellstand) from Bestellungen b inner join b.platz p on b.platz.id = p.id inner join b.messpunkte m on b.id = m.bestellungen.id where m.fuellstand < 0.3 and m.id = ( select max(id) from b.messpunkte me where me.bestellungen.id = b.id)")
+    @Query("select new com.baverage.backend.dto.EmptySeat( b.id, p.tisch.id, b.platz.id, ( select count(*) from b.platz pl where pl.tisch.id = p.tisch.id group by p.tisch.id) as tische_anzahl, m.fuellstand) from Bestellungen b inner join b.platz p on b.platz.id = p.id inner join b.messpunkte m on b.id = m.bestellungen.id where m.fuellstand < 0.3 and m.id = ( select max(me.id) from b.messpunkte me where me.bestellungen.id = b.id)")
     Collection<EmptySeat> getLeerePlaetze();
-    */
 }

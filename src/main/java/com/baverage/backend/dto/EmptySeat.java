@@ -15,6 +15,6 @@ public class EmptySeat {
     private int bestellung_id;
     private int tisch_id;
     private int platz_id;
-    private int plaetze_am_tisch;
+    private long plaetze_am_tisch;
     private double fuellstand;
 }
