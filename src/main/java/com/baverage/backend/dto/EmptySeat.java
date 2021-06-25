@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmptySeat {
-    private int id;
+    private int bestellung_id;
     private int tisch_id;
     private int platz_id;
     private int plaetze_am_tisch;
