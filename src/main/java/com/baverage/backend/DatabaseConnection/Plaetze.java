@@ -26,23 +26,24 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Getter
 @Setter
 public class Plaetze implements Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
-	
-	
-	@ManyToOne
-	@JsonIgnore
-    private Tische tisch;
-	
-	@OneToMany (mappedBy="platz")
-    @JsonManagedReference
-	private List<Bestellungen> bestellungen;
-	
-	String name="";
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
+    
+    String mac;
 
-        @OneToMany(mappedBy="platz")
-        @JsonManagedReference
-        private List<Kunden> kunden;
+    @ManyToOne
+    @JsonIgnore
+    private Tische tisch;
+
+    @OneToMany(mappedBy = "platz")
+    @JsonManagedReference
+    private List<Bestellungen> bestellungen;
+
+    String name = "";
+
+    @OneToMany(mappedBy = "platz")
+    @JsonManagedReference
+    private List<Kunden> kunden;
 
 }
