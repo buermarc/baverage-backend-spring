@@ -42,6 +42,7 @@ import com.baverage.backend.DatabaseConnection.TestTable;
 import com.baverage.backend.DatabaseConnection.Tische;
 import com.baverage.backend.DatabaseConnection.Stati;
 import com.baverage.backend.dto.CreateUserRequest;
+import com.baverage.backend.dto.EmptySeat;
 import com.baverage.backend.dto.IdClass;
 import com.baverage.backend.dto.NewBestellung;
 
@@ -176,6 +177,14 @@ public class CustomRestController {
         return this.bestellungService.createBestellung(newBestellung.getPlatz_id(), newBestellung.getGetraenk_id(),
                 Stati.Status.BESTELLT.getId(), newBestellung.getKunde_id());
     }
+
+    /*
+    @GetMapping(value = "/getLeerePlaetze")
+    public @ResponseBody Iterable<EmptySeat> getLeerePlaetze(Model model) {
+        return this.bestellungRepo.getLeerePlaetze();
+    }
+    */
+
 
     // funktional unnoetig ~ Marc
 
