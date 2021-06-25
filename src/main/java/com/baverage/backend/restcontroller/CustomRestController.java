@@ -126,7 +126,7 @@ public class CustomRestController {
     }
 
     /**
-     * Takes a JSON object with the name of the new kunde { "name": "Charlie" }.
+     * Takes a JSON object with the name of the new kunde { "name": "Charlie", "platz_id": 1 }.
      * Returns the newly created kunde.
      *
      * @param {@link CreateUserRequest}
@@ -136,7 +136,7 @@ public class CustomRestController {
     @PostMapping(path = "/createKunde", consumes = "application/json")
     public @ResponseBody Kunden createKunde(@RequestBody CreateUserRequest createUserRequest) {
         // This returns a JSON or XML with the users
-        return this.kundeService.createKunde(createUserRequest.getName());
+        return this.kundeService.createKunde(createUserRequest.getName(), createUserRequest.getPlatz_id());
         // return "createKunde erfolgreich, return value: " + ret;
     }
 
