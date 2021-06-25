@@ -12,15 +12,16 @@ public class Mqtt {
 	
 	static String message= "";
 	static MqttClient client;
-	public static void main(String[] args) throws MqttSecurityException, MqttException {
-		String message2= getMessage();
+
+	public Mqtt() throws MqttSecurityException, MqttException {
+		String message2 = getMessage();
 		
 	}
 	
 	public static String getMessage() throws MqttSecurityException, MqttException {
 		
 	client = new MqttClient(
-			"tcp://broker.mqttdashboard.com", UUID.randomUUID().toString());
+			"tcp://192.168.0.107", UUID.randomUUID().toString());
 
 			client.setCallback(new MqttCallback() {
 			       public void connectionLost(Throwable throwable) { }
@@ -28,7 +29,7 @@ public class Mqtt {
 				public void messageArrived(String t, MqttMessage m) throws Exception {
 					System.out.println("Erster String" + t);
 					message= new String(m.getPayload());
-			        System.out.println(new String(m.getPayload()));
+                                        System.out.println(new String(m.getPayload()));
 					transferDataToDatabase("massBavarage", message);
 			       }
 
@@ -46,6 +47,8 @@ public class Mqtt {
 		System.out.println("Hallo bin in der methode trandfer");
 		switch (topic) {
 			case "massBavarage":
+                                // mac, rfid, gewicht -> mac -> platz -> bestellung -> neuen Messpunkt -> Gewicht
+                                // Rechnen
 				System.out.println("Komme ich hier an?");
 				int valOfComma= message.indexOf(",");
 				System.out.println("Bin nach Index");
