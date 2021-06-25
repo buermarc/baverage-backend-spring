@@ -21,7 +21,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-
 import com.sun.istack.NotNull;
 
 @Data
@@ -31,19 +30,19 @@ import com.sun.istack.NotNull;
 @Getter
 @Setter
 public class Kunden implements Serializable {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
-	
-	@OneToMany(mappedBy="kunde")
-        @JsonBackReference
-	private List <Bestellungen> bestellungen= new ArrayList <Bestellungen>();
 
-        Date zeitpunkt_angelegt;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
 
-        Date zeitpunkt_abgeschlossen;
-	
+    @OneToMany(mappedBy = "kunde")
+    @JsonBackReference
+    private List<Bestellungen> bestellungen = new ArrayList<Bestellungen>();
+
+    Date zeitpunkt_angelegt;
+
+    Date zeitpunkt_abgeschlossen;
+
     @ManyToOne
     @JsonBackReference
     private Plaetze platz;
