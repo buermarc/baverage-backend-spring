@@ -19,88 +19,94 @@ import org.springframework.core.env.Environment;
 
 public class MyTextWebSocketHandler extends TextWebSocketHandler {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MyTextWebSocketHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyTextWebSocketHandler.class);
 
-	private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
+    private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
-	private String mqttServerAddress = "tcp://192.168.178.120:1883";
+    private String mqttServerAddress = "tcp://192.168.178.123:1883";
 
-	private MqttClient client = null;
+    private MqttClient client = null;
 
-	MqttClient initClient() throws MqttException {
+    MqttClient initClient() throws MqttException {
 
-		LOGGER.error("Server name that was loaded is: {}", mqttServerAddress);
-		client = new MqttClient(mqttServerAddress, MqttClient.generateClientId());
-		client.setCallback(new MqttCallback() {
-			@Override
-			public void connectionLost(Throwable throwable) {
-			}
+        LOGGER.error("Server name that was loaded is: {}", mqttServerAddress);
+        client = new MqttClient(mqttServerAddress, MqttClient.generateClientId());
+        client.setCallback(new MqttCallback() {
+            @Override
+            public void connectionLost(Throwable throwable) {
+            }
 
-			@Override
-			public void messageArrived(String t, MqttMessage m) throws Exception {
-				// Expect csv
-				String response = new String(m.getPayload()).trim();
-				String[] splittedResponse = response.split(",");
-				if (splittedResponse.length != 2) {
-					LOGGER.error("Received read with invalid layou, msg: {}", response);
-					return;
-				}
+            @Override
+            public void messageArrived(String t, MqttMessage m) throws Exception {
+                // Expect csv
+                String response = new String(m.getPayload()).trim();
+                String[] splittedResponse = response.split(",");
+                if (splittedResponse.length != 2) {
+                    LOGGER.error("Received read with invalid layou, msg: {}", response);
+                    return;
+                }
 
-				WebSocketSession webSocketSession = sessions.stream()
-						.filter(sessionX -> splittedResponse[0].equals(sessionX.getId())).findAny().orElse(null);
+                WebSocketSession webSocketSession = sessions.stream()
+                        .filter(sessionX -> splittedResponse[0].equals(sessionX.getId())).findAny().orElse(null);
 
-				if (webSocketSession == null) {
-					LOGGER.error("WebSocketSession with the id: {} was not found", splittedResponse[0]);
-					return;
-				}
-				webSocketSession.sendMessage(new TextMessage(splittedResponse[1]));
-			}
+                if (webSocketSession == null) {
+                    LOGGER.error("WebSocketSession with the id: {} was not found", splittedResponse[0]);
+                    return;
+                }
+                webSocketSession.sendMessage(new TextMessage(splittedResponse[1]));
+            }
 
-			@Override
-			public void deliveryComplete(IMqttDeliveryToken t) {
-			}
-		});
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken t) {
+            }
+        });
 
-		client.connect();
+        client.connect();
 
-		client.subscribe("rfid_response");
-		return client;
-	}
+        client.subscribe("rfid_response");
+        return client;
+    }
 
-	@Override
-	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		sessions.add(session);
-		super.afterConnectionEstablished(session);
-		try {
-			if (this.client == null) {
-				this.client = initClient();
-			}
-		} catch (MqttException e) {
-			LOGGER.error("Found MqttException: {}", e.toString());
-			LOGGER.error("Probably server down");
-			return;
-		}
+    @Override
+    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        sessions.add(session);
+        super.afterConnectionEstablished(session);
+        try {
+            if (this.client == null) {
+                this.client = initClient();
+            } else {
+                if (!this.client.isConnected()) {
+                    this.client.connect();
+                }
+            }
+        } catch (MqttException e) {
+            LOGGER.error("Found MqttException: {}", e.toString());
+            LOGGER.error("Probably server down");
+            return;
+        }
 
-		MqttMessage message = new MqttMessage(session.getId().getBytes());
-		client.publish("rfid_request", message);
-	}
+        MqttMessage message = new MqttMessage(session.getId().getBytes());
+        client.publish("rfid_request", message);
+        LOGGER.debug("Published rfid request '{}' to topic 'rfid_request'", message);
+    }
 
-	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		this.client.disconnect();
-		sessions.remove(session);
-		super.afterConnectionClosed(session, status);
-	}
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        // We should not close the whole mqtt connection each time any websocket disconnects
+        // this.client.disconnect();
+        sessions.remove(session);
+        super.afterConnectionClosed(session, status);
+    }
 
-	@Override
-	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		super.handleTextMessage(session, message);
-		sessions.forEach(webSocketSession -> {
-			try {
-				webSocketSession.sendMessage(message);
-			} catch (IOException e) {
-				LOGGER.error("Error occurred.", e);
-			}
-		});
-	}
+    @Override
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        super.handleTextMessage(session, message);
+        sessions.forEach(webSocketSession -> {
+            try {
+                webSocketSession.sendMessage(message);
+            } catch (IOException e) {
+                LOGGER.error("Error occurred.", e);
+            }
+        });
+    }
 }
