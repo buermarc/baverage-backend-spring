@@ -18,28 +18,28 @@ INSERT INTO getraenke(name, groesse, preis, alkoholgehalt) VALUES ("PILS", 0500,
 INSERT INTO getraenke(name, groesse, preis, alkoholgehalt) VALUES ("ROTWEIN", 0250, 4.50, 13.5);
 INSERT INTO getraenke(name, groesse, preis, alkoholgehalt) VALUES ("WEINSCHORLE", 0250, 2.50, 6.0);
 
-INSERT INTO glaeser(name, leergewicht) VALUES ("ROTWEIN_GLAS", 100);
-INSERT INTO glaeser(name, leergewicht) VALUES ("WEISSWEIN_GLAS", 100);
-INSERT INTO glaeser(name, leergewicht) VALUES ("WEIZEN_GLAS", 100);
-INSERT INTO glaeser(name, leergewicht) VALUES ("PILS_GLAS", 100);
-INSERT INTO glaeser(name, leergewicht) VALUES ("SCHORLE_GLAS", 100);
-INSERT INTO glaeser(name, leergewicht) VALUES ("500_ML_GLAS", 100);
+INSERT INTO glaeser(name, leergewicht, rfid) VALUES ("ROTWEIN_GLAS", 100, "RFID");
+INSERT INTO glaeser(name, leergewicht, rfid) VALUES ("WEISSWEIN_GLAS", 100, "RFID");
+INSERT INTO glaeser(name, leergewicht, rfid) VALUES ("WEIZEN_GLAS", 100, "RFID");
+INSERT INTO glaeser(name, leergewicht, rfid) VALUES ("PILS_GLAS", 100, "RFID");
+INSERT INTO glaeser(name, leergewicht, rfid) VALUES ("SCHORLE_GLAS", 100, "RFID");
+INSERT INTO glaeser(name, leergewicht, rfid) VALUES ("500_ML_GLAS", 100, "RFID");
 
 INSERT INTO kunden(name) VALUES ("Alice");
 INSERT INTO kunden(name) VALUES ("Bob");
 INSERT INTO kunden(name) VALUES ("Charlie");
 INSERT INTO kunden(name) VALUES ("Kim");
 
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ A",1);
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ B",1);
+INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ A", 1, "MAC1");
+INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ B", 1, "MAC2");
 
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ C",2);
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ D",2);
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ E",2);
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ F",2);
+INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ C", 2, "MAC3");
+INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ D", 2, "MAC4");
+INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ E", 2, "MAC5");
+INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ F", 2, "MAC6");
 
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ G",3);
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ H",3);
+INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ G", 3, "MAC7");
+INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ H", 3, "MAC8");
 
 INSERT INTO bestellungen(
     zeitpunkt_bestellt,
@@ -195,9 +195,9 @@ INSERT INTO bestellungen(
 
 INSERT INTO tische(name) VALUES ("TISCH D");
 
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ I",4);
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ J",4);
-INSERT INTO plaetze(name, tisch_id) VALUES ("PLATZ K",4);
+INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ I", 4, "MAC9");
+INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ J", 4, "MAC10");
+INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ K", 4, "MAC11");
 
 INSERT INTO bestellungen(
     zeitpunkt_bestellt,
