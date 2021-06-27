@@ -1,5 +1,10 @@
-mqtt-server:
+mqtt:
+  server:
     address: 192.168.178.123
+
+logging:
+  level:
+    com.baverage.backend: DEBUG
 
 #spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
 
