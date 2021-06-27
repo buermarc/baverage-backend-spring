@@ -18,7 +18,6 @@ import org.springframework.data.repository.CrudRepository;
 import com.baverage.backend.dto.EmptySeat;
 import com.baverage.backend.dto.OffeneBestellung;
 import com.baverage.backend.DatabaseConnection.Bestellungen;
-import com.baverage.backend.DatabaseConnection.Stati.Status;
 
 /**
  * Erlaubt angepasste Export Mappings des Repositories
@@ -49,4 +48,11 @@ public interface BestellungRepo extends CrudRepository<Bestellungen, Integer> {
 
     @Query("select new com.baverage.backend.dto.EmptySeat( b.id, p.tisch.id, b.platz.id, ( select count(*) from b.platz pl where pl.tisch.id = p.tisch.id group by p.tisch.id) as tische_anzahl, m.fuellstand) from Bestellungen b inner join b.platz p on b.platz.id = p.id inner join b.messpunkte m on b.id = m.bestellungen.id where m.fuellstand < 0.3 and m.id = ( select max(me.id) from b.messpunkte me where me.bestellungen.id = b.id)")
     Collection<EmptySeat> getLeerePlaetze();
+
+    //@Query("select b from Bestellungen b where b.platz.id = (select p.id from b.platz p where p.mac = :mac) and b.status.id in (:status_two, :status_three)")
+    @Query("select b from Bestellungen b where b.platz.mac = :mac and b.status.id in (:status_two, :status_three)")
+    Collection<Bestellungen> getOrderByMacWhereStatusIn(@Param("mac") String mac, @Param("status_two") int status_two, @Param("status_three") int status_three);
+
+    @Query("select b from Bestellungen b where b.glas.rfid = :rfid and b.status.id in (:status_two, :status_three)")
+    Collection<Bestellungen> getOrderByRfidWhereStatusIn(@Param("rfid") String rfid, @Param("status_two") int status_two, @Param("status_three") int status_three);
 }
