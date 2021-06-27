@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 
 import java.util.List;
@@ -24,15 +23,18 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Getter
 @Setter
 public class Glaeser implements Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
-	
-        String name;
 
-	int leergewicht;
-	
-	@OneToMany (mappedBy="glas")
-        @JsonBackReference
-	private List<Bestellungen> bestellungen;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
+
+    String name;
+
+    String rfid;
+
+    int leergewicht;
+
+    @OneToMany(mappedBy = "glas")
+    @JsonBackReference
+    private List<Bestellungen> bestellungen;
 }
