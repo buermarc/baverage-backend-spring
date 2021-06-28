@@ -91,7 +91,21 @@ public class CustomRestController {
         // This returns a JSON or XML with the users
         int rows = this.bestellungRepo.setBestellungsStatusVorbereitet(idClass.getId(), new Date(),
                 Stati.Status.VORBEREITET.getId());
-        Glaeser glas = this.glasRepo.findByRfid(MyTextWebSocketHandler.lastRfid);
+        // Use the latest rfid we found to set the corresponding glas as the glas of the ready order
+        try {
+            Glaeser glas = this.glasRepo.findByRfid(MyTextWebSocketHandler.lastRfid);
+            if (glas == null) {
+                LOGGER.error("Could not find any glas with the rfid '{}'", MyTextWebSocketHandler.lastRfid);
+            }
+            Bestellungen bestellung = this.bestellungRepo.findById(idClass.getId()).get();
+            if (bestellung == null) {
+                LOGGER.error("Could not find any bestellung with the id '{}'. I think this should not be possible", idClass.getId());
+            }
+            bestellung.setGlas(glas);
+            bestellungRepo.save(bestellung);
+        } catch (Exception e) {
+            LOGGER.error("While trying to set the glas we failed. Exception {}", e.toString());
+        }
         UpdateQueryResponse res = new UpdateQueryResponse();
         if (rows == 1) {
             res.setSuccess(true);
