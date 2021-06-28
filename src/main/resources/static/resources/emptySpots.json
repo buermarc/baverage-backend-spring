@@ -1,0 +1,46 @@
+{
+    "leerePlaetze": [
+        {
+            "id": 1,
+            "tischId": 1,
+            "plaetzeAmTisch": 6,
+            "platzId" : 1,
+            "fuellstand": 0.3 
+        },
+        {
+            "id": 2,
+            "tischId": 1,
+            "plaetzeAmTisch": 6,
+            "platzId" : 1,
+            "fuellstand": 0.2 
+        },
+        {
+            "id": 3,
+            "tischId": 2,
+            "plaetzeAmTisch": 6,
+            "platzId" : 1,
+            "fuellstand": 0.0 
+        },
+        {
+            "id": 4,
+            "tischId": 2,
+            "plaetzeAmTisch": 6,
+            "platzId" : 1,
+            "fuellstand": 0.23 
+        },
+        {
+            "id": 5,
+            "tischId": 4,
+            "plaetzeAmTisch": 6,
+            "platzId" : 1,
+            "fuellstand": 0.05 
+        },
+        {
+            "id": 6,
+            "tischId": 1,
+            "plaetzeAmTisch": 6,
+            "platzId" : 1,
+            "fuellstand": 0.15 
+        }
+    ]
+}

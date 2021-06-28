@@ -1,0 +1,29 @@
+{
+    "plaetze": [
+        {
+            "id": 1,
+            "fuellstand": 0.3,
+            "name": "Lena"
+        },
+        {
+            "id": 2,
+            "fuellstand": 0.0,
+            "name": "Maurice"
+        },
+        {
+            "id": 3,
+            "fuellstand": 0.8,
+            "name": "Nico"
+        },
+        {
+            "id": 4,
+            "fuellstand": 0.2,
+            "name": "Marc"
+        },
+        {
+            "id": 5,
+            "fuellstand": 0.0,
+            "name": ""
+        }
+    ]
+}

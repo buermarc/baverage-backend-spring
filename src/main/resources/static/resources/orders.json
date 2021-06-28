@@ -1,0 +1,40 @@
+{
+    "bestellungen": [
+        {
+            "id": 1,
+            "tischId": 1,
+            "getraenkname": "Cola",
+            "getraenkgroesse": 0.5
+        },
+        {
+            "id": 2,
+            "tischId": 1,
+            "getraenkname": "Fanta",
+            "getraenkgroesse": 0.5
+        },
+        {
+            "id": 3,
+            "tischId": 2,
+            "getraenkname": "Weizen",
+            "getraenkgroesse": 0.5
+        },
+        {
+            "id": 4,
+            "tischId": 3,
+            "getraenkname": "Sprite",
+            "getraenkgroesse": 0.5
+        },
+        {
+            "id": 5,
+            "tischId": 4,
+            "getraenkname": "Wasser",
+            "getraenkgroesse": 0.5
+        },
+        {
+            "id": 6,
+            "tischId": 5,
+            "getraenkname": "OSaft",
+            "getraenkgroesse": 0.5
+        }
+    ]
+}

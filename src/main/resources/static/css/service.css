@@ -1,0 +1,249 @@
+/* Allgemein */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.frame {
+    height: 100vh;
+    width: 100%;
+    background-color: blue;
+}
+
+/* Lieferung / Bestellung */
+#page_overview {
+    display: block;
+}
+
+#deliveries {
+    height: 35vh;
+    width: 100%;
+    background-color: lightgrey;
+    border-bottom: solid black 1vh;
+    text-align: justify;
+}
+
+#ordering {
+    height: 59vh;
+    width: 100%;
+    background-color: lightgrey;
+}
+
+#special_order {
+    height: 5vh;
+    width: 100%;
+    background-color: darkblue;
+    font-size: 4em;
+    text-align: center;
+    line-height: 5vh;
+    color: white;
+}
+
+.title {
+    font-size: 5em;
+    padding: 15px;
+    width: calc(100% - 30px);
+    text-align: left;
+}
+
+.overview_item {
+    font-size: 4em;
+    display: inline-block;
+    border: solid black 5px;
+    width: 40%;
+    padding: 15px;
+    background-color: green;
+}
+
+.overview_item:nth-child(2n + 1) {
+    margin: 10px 40px 10px 20px;
+}
+
+.overview_item:nth-child(2n) {
+    margin: 10px 20px 10px 40px;
+}
+
+.outgoing_tablenumber {
+    font-size: 1em;
+    float: left;
+    margin-left: 15px;
+}
+
+.deliverytime {
+    font-size: 1em;
+    float: right;
+    margin-right: 15px;
+}
+
+.table_capacity {
+    font-size: 1em;
+    float: right;
+    margin-right: 15px;
+}
+
+.dummy {
+    width: 100%;
+    height: 1px;
+    display: inline-block;
+}
+
+
+/* Page_table*/
+#page_table {
+    display: none;
+}
+
+#table_number {
+    width: 100%;
+    height: 5vh;
+    background-color: darkgrey;
+    font-size: 4em;
+    text-align: center;
+    line-height: 5vh;
+}
+
+#table_spots {
+    width: 100%;
+    height: 90vh;
+    background-color: lightgrey;
+    text-align: justify;
+}
+
+.spot {
+    width: 45%;
+    padding-top: 45%;
+    display: inline-block;
+    background-color: lavender;
+    position: relative;
+}
+
+.spot:nth-child(2n+1) {
+    margin: 10px 10px 10px 30px;
+}
+
+.spot:nth-child(2n) {
+    margin: 10px 30px 10px 10px;
+}
+
+.text {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    font-size: 4em;
+    text-align: center;
+}
+
+#table_close {
+    width: 100%;
+    height: 5vh;
+    background-color: darkblue;
+    font-size: 4em;
+    line-height: 5vh;
+    text-align: center;
+    color: white;
+}
+
+/* Page_order*/
+#page_order {
+    display: none;
+}
+
+#spot_header {
+    width: 100%;
+    height: 5vh;
+    background-color: darkgrey;
+    font-size: 4em;
+    text-align: center;
+    line-height: 5vh;
+}
+
+#spot_drinks {
+    width: 100%;
+    height: 90vh;
+    background-color: lightgrey;
+    text-align: justify;
+}
+
+.drink {
+    width: 45%;
+    padding-top: 45%;
+    display: inline-block;
+    background-color: skyblue;
+    position: relative;
+}
+
+.drink:nth-child(2n+1) {
+    margin: 10px 10px 10px 30px;
+}
+
+.drink:nth-child(2n) {
+    margin: 10px 30px 10px 10px;
+}
+
+#spot_cancel {
+    width: 100%;
+    height: 5vh;
+    background-color: darkblue;
+    font-size: 4em;
+    line-height: 5vh;
+    text-align: center;
+    color: white;
+}
+
+#button_done {
+    float: left;
+    margin-left: 30px;
+    color: white;
+    display: none;
+}
+
+#button_new {
+    float: left;
+    margin-left: 30px;
+    color: white;
+    display: none;
+}
+
+#name {
+    color: white;
+}
+
+#tablenr {
+    float: right;
+    margin-right: 30px;
+    color: white;
+}
+
+/* Name Input */
+#name_input {
+    display: none;
+    position: fixed;
+    background-color: white;
+    box-sizing: border-box;
+    top: 20%;
+    left: 10%;
+    margin-top: -60px;
+    width: 80%;
+    border: solid black 5px;
+    border-radius: 30px;
+    font-size: 4em;
+    text-align: center;
+    line-height: 2em;
+}
+
+#name_input input {
+    font-size: 1em;
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+#name_input div:last-child {
+    background-color: lightblue;
+    width: 100%;
+    vertical-align: bottom;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
