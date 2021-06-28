@@ -69,7 +69,12 @@ let moveOrders = (finishedArea) => {
 //Nächste Spalten mit Bestellungen generieren
 let generateNextOrders = () => {
     fetch("./api/getOffeneBestellungen").then( //fetch Spring Endpoint
-        response => {return response.json();} //parse response zu json
+        response => {
+            console.log(response);
+            let jsonResponse = JSON.parse(response);
+            console.log(jsonResponse);
+            return jsonResponse;
+        } //parse response zu json
     ).then(
         data => {
             while((toDoArea = getFirstEmptyColumn()) != null) { //solange es weitere leere Spalten gibt
