@@ -142,6 +142,7 @@ let addSpotElement = (spot, tisch_id, container) => {
             container.lastElementChild.addEventListener("click", () => { //Click Event zum Bestellen hinzufügen
                 openOrderPage(spot.id, tisch_id, spot.name, customer.id);
             });
+            console.log(customer);
             //Farbe basierend auf Füllstand des jeweiligen Platzes
             let lastOrder = spot.bestellungen[spot.bestellungen.length - 1];
             let lastMeasurement = lastOrder.messpunkte[lastOrder.messpunkte.length - 1];
