@@ -116,6 +116,16 @@ public class CustomRestController {
         return this.tischRepo.findById(id).orElse(null);
     }
 
+    @GetMapping(value = "/getKundeByPlatzId")
+    public @ResponseBody Kunden getKundeByPlatzId(@RequestParam int id) {
+        
+	Kunden kunde = this.kundeRepo.findLatestByPlatzId(id);
+	if (kunde == null) {
+		LOGGER.warn("kunde is null with id {}", id);
+	}
+        return kunde; 
+    }
+
     @GetMapping(value = "/getGetraenke")
     public @ResponseBody Iterable<Getraenke> getGetraenke() {
         return this.getraenkRepo.findAll();
