@@ -68,7 +68,7 @@ let moveOrders = (finishedArea) => {
 
 //Nächste Spalten mit Bestellungen generieren
 let generateNextOrders = () => {
-    fetch("./resources/orders.json").then( //fetch Spring Endpoint
+    fetch("./api/getOffeneBestellungen").then( //fetch Spring Endpoint
         response => {return response.json();} //parse response zu json
     ).then(
         data => {
