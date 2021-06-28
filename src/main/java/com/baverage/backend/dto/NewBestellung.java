@@ -16,5 +16,4 @@ import lombok.NoArgsConstructor;
 public class NewBestellung implements Serializable {
     int platz_id;
     int getraenk_id;
-    int kunde_id;
 }

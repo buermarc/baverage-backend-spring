@@ -18,4 +18,5 @@ public class OffeneBestellung implements Serializable{
     int tisch_id;
     String getraenkname;
     int getraengroesse;
+    int status;
 }
