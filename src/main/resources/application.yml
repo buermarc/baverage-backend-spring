@@ -1,6 +1,6 @@
 mqtt:
   server:
-    address: @{MQTT_SERVER_ADDRESS:#{127.0.0.1}}
+    address: ${MQTT_SERVER_ADDRESS:#{127.0.0.1}}
 
 logging:
   level:
