@@ -25,10 +25,10 @@ INSERT INTO glaeser(name, leergewicht, rfid) VALUES ("PILS_GLAS", 100, "RFID");
 INSERT INTO glaeser(name, leergewicht, rfid) VALUES ("SCHORLE_GLAS", 100, "RFID");
 INSERT INTO glaeser(name, leergewicht, rfid) VALUES ("500_ML_GLAS", 100, "RFID");
 
-INSERT INTO kunden(name) VALUES ("Alice");
-INSERT INTO kunden(name) VALUES ("Bob");
-INSERT INTO kunden(name) VALUES ("Charlie");
-INSERT INTO kunden(name) VALUES ("Kim");
+INSERT INTO kunden(name, zeitpunkt_angelegt, platz_id) VALUES ("Alice", "1980-02-01-12:34:56", 1);
+INSERT INTO kunden(name, zeitpunkt_angelegt, platz_id) VALUES ("Bob", "1980-02-01-12:34:56", 2);
+INSERT INTO kunden(name, zeitpunkt_angelegt, platz_id) VALUES ("Charlie", "1980-02-01-12:34:56", 3);
+INSERT INTO kunden(name, zeitpunkt_angelegt, platz_id) VALUES ("Kim", "1980-02-01-12:34:56", 4);
 
 INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ A", 1, "MAC1");
 INSERT INTO plaetze(name, tisch_id, mac) VALUES ("PLATZ B", 1, "MAC2");
