@@ -175,7 +175,7 @@ public class CustomRestController {
     public @ResponseBody Bestellungen createBestellung(@RequestBody NewBestellung newBestellung) {
         // This returns a JSON or XML with the users
         return this.bestellungService.createBestellung(newBestellung.getPlatz_id(), newBestellung.getGetraenk_id(),
-                Stati.Status.BESTELLT.getId(), newBestellung.getKunde_id());
+                Stati.Status.BESTELLT.getId());
     }
 
     @GetMapping(value = "/getLeerePlaetze")
