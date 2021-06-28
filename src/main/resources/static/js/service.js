@@ -135,11 +135,13 @@ let addSpotElement = (spot, tisch_id, container) => {
     let newSpotElement = template.content.cloneNode(true); //Template Inhalt kopieren
     newSpotElement.querySelectorAll("div")[1].textContent = spot.name==""?"Frei":spot.name; //Spot mit Name oder "Frei" beschriften
     container.appendChild(newSpotElement); //Neuen Platz hinzufügen
+    let spotElement = container.lastElementChild;
     fetch("./api/getKundeByPlatzId?id="+spot.id).then( //Tisch von Spring Endpoint abrufen
         result => {return result.json();} //Response zu JSON parsen
     ).then(
         customer => {
-            container.lastElementChild.addEventListener("click", () => { //Click Event zum Bestellen hinzufügen
+            console.log(spotElement);
+            spotElement.addEventListener("click", () => { //Click Event zum Bestellen hinzufügen
                 openOrderPage(spot.id, tisch_id, spot.name, customer.id);
             });
             console.log(customer);
@@ -149,12 +151,12 @@ let addSpotElement = (spot, tisch_id, container) => {
             let lastMeasurement = lastOrder.messpunkte[lastOrder.messpunkte.length - 1];
 
             if(lastMeasurement.fuellstand > 0.3) { //Mehr als 30% --> Grün
-                container.lastElementChild.style.backgroundColor = "green";
+                spotElement.style.backgroundColor = "green";
             } else if(lastMeasurement.fuellstand <= 0.3 && spot.name != "") { //30% oder weniger --> Gelb
-                container.lastElementChild.style.backgroundColor = "yellow";
+                spotElement.style.backgroundColor = "yellow";
             }
             if(lastMeasurement.fuellstand <= 0.1 && spot.name != "") { //10% oder weniger --> Rot
-                container.lastElementChild.style.backgroundColor = "red";
+                spotElement.style.backgroundColor = "red";
             }
         }
     )
