@@ -1,14 +1,15 @@
+create database if not exists app;
 use app;
--- MySQL dump 10.13  Distrib 8.0.25, for Linux (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.10-MariaDB, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: app
+-- Host: 192.168.0.107    Database: app
 -- ------------------------------------------------------
 -- Server version	8.0.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -22,7 +23,7 @@ use app;
 
 DROP TABLE IF EXISTS `bestellungen`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bestellungen` (
   `id` int NOT NULL AUTO_INCREMENT,
   `initialgewicht` double NOT NULL,
@@ -50,7 +51,7 @@ CREATE TABLE `bestellungen` (
 
 DROP TABLE IF EXISTS `getraenke`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `getraenke` (
   `id` int NOT NULL AUTO_INCREMENT,
   `alkoholgehalt` double NOT NULL,
@@ -67,7 +68,7 @@ CREATE TABLE `getraenke` (
 
 DROP TABLE IF EXISTS `glaeser`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `glaeser` (
   `id` int NOT NULL AUTO_INCREMENT,
   `leergewicht` int NOT NULL,
@@ -83,7 +84,7 @@ CREATE TABLE `glaeser` (
 
 DROP TABLE IF EXISTS `kunden`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `kunden` (
   `id` int NOT NULL AUTO_INCREMENT,
   `bezahlt` tinyint(1) DEFAULT '0',
@@ -102,7 +103,7 @@ CREATE TABLE `kunden` (
 
 DROP TABLE IF EXISTS `messpunkte`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `messpunkte` (
   `id` int NOT NULL AUTO_INCREMENT,
   `fuellstand` double NOT NULL,
@@ -119,7 +120,7 @@ CREATE TABLE `messpunkte` (
 
 DROP TABLE IF EXISTS `plaetze`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `plaetze` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -136,7 +137,7 @@ CREATE TABLE `plaetze` (
 
 DROP TABLE IF EXISTS `stati`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stati` (
   `id` int NOT NULL AUTO_INCREMENT,
   `bezeichnung` varchar(255) DEFAULT NULL,
@@ -150,7 +151,7 @@ CREATE TABLE `stati` (
 
 DROP TABLE IF EXISTS `test_table`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `test_table` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -164,7 +165,7 @@ CREATE TABLE `test_table` (
 
 DROP TABLE IF EXISTS `tische`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tische` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -181,4 +182,4 @@ CREATE TABLE `tische` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-27 17:29:00
+-- Dump completed on 2021-06-28 15:49:57
