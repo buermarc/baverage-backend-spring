@@ -143,6 +143,7 @@ let addSpotElement = (spot, tisch_id, container) => {
                 openOrderPage(spot.id, tisch_id, spot.name, customer.id);
             });
             console.log(customer);
+            console.log(spot);
             //Farbe basierend auf Füllstand des jeweiligen Platzes
             let lastOrder = spot.bestellungen[spot.bestellungen.length - 1];
             let lastMeasurement = lastOrder.messpunkte[lastOrder.messpunkte.length - 1];
