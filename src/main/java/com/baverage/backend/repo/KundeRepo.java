@@ -30,4 +30,7 @@ public interface KundeRepo extends CrudRepository<Kunden, Integer>{
     @Transactional
     @Query("UPDATE Kunden k set k.bezahlt = true WHERE k.id = :kunde_id")
     int setKundeBezahlt(@Param("kunde_id") int kunde_id);
+
+    @Query("SELECT k FROM Kunden k WHERE k.platz.id = :platz_id AND k.zeitpunkt_abgeschlossen = null AND k.bezahlt = false")
+    Kunden findLatestByPlatzId(@Param("platz_id") int platz_id);
 }
