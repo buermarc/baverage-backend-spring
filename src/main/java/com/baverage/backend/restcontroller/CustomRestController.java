@@ -31,6 +31,7 @@ import com.baverage.backend.repo.TestTableRepo;
 import com.baverage.backend.service.KundeService;
 import com.baverage.backend.service.BestellungService;
 import com.baverage.backend.repo.TischRepo;
+import com.baverage.backend.repo.GlasRepo;
 import com.mysql.cj.log.Log;
 import com.baverage.backend.dto.OffeneBestellung;
 import com.baverage.backend.dto.BasicResponse;
@@ -38,6 +39,7 @@ import com.baverage.backend.dto.UpdateQueryResponse;
 import com.baverage.backend.DatabaseConnection.Bestellungen;
 import com.baverage.backend.DatabaseConnection.Kunden;
 import com.baverage.backend.DatabaseConnection.Getraenke;
+import com.baverage.backend.DatabaseConnection.Glaeser;
 import com.baverage.backend.DatabaseConnection.TestTable;
 import com.baverage.backend.DatabaseConnection.Tische;
 import com.baverage.backend.DatabaseConnection.Stati;
@@ -46,6 +48,7 @@ import com.baverage.backend.dto.EmptySeat;
 import com.baverage.backend.dto.IdClass;
 import com.baverage.backend.dto.NewBestellung;
 import com.baverage.backend.dto.Lieferung;
+import com.baverage.backend.handler.MyTextWebSocketHandler;
 
 @Controller
 @RequestMapping(path = "/api")
@@ -58,6 +61,9 @@ public class CustomRestController {
 
     @Autowired
     private TischRepo tischRepo;
+
+    @Autowired
+    private GlasRepo glasRepo;
 
     @Autowired
     private KundeRepo kundeRepo;
@@ -85,6 +91,7 @@ public class CustomRestController {
         // This returns a JSON or XML with the users
         int rows = this.bestellungRepo.setBestellungsStatusVorbereitet(idClass.getId(), new Date(),
                 Stati.Status.VORBEREITET.getId());
+        Glaeser glas = this.glasRepo.findByRfid(MyTextWebSocketHandler.lastRfid);
         UpdateQueryResponse res = new UpdateQueryResponse();
         if (rows == 1) {
             res.setSuccess(true);
