@@ -20,6 +20,7 @@ import org.springframework.core.env.Environment;
 public class MyTextWebSocketHandler extends TextWebSocketHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MyTextWebSocketHandler.class);
+    public static String lastRfid = "NORFIDYET";
 
     private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
@@ -40,12 +41,25 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
             public void messageArrived(String t, MqttMessage m) throws Exception {
                 // Expect csv
                 String response = new String(m.getPayload()).trim();
+                /*
                 String[] splittedResponse = response.split(",");
                 if (splittedResponse.length != 2) {
                     LOGGER.error("Received read with invalid layou, msg: {}", response);
                     return;
                 }
+                */
+                response = response.trim();
+                final String msg = response;
+                lastRfid = response;
+                sessions.forEach(webSocketSession -> {
+                    try {
+                        webSocketSession.sendMessage(new TextMessage(msg));
+                    } catch (IOException e) {
+                        LOGGER.error("Error occurred.", e);
+                    }
+                });
 
+                /*
                 WebSocketSession webSocketSession = sessions.stream()
                         .filter(sessionX -> splittedResponse[0].equals(sessionX.getId())).findAny().orElse(null);
 
@@ -54,6 +68,7 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
                     return;
                 }
                 webSocketSession.sendMessage(new TextMessage(splittedResponse[1]));
+                */
             }
 
             @Override
@@ -63,7 +78,7 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
 
         client.connect();
 
-        client.subscribe("rfid_response");
+        client.subscribe("rfidTags");
         return client;
     }
 
