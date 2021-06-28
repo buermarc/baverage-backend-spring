@@ -24,7 +24,7 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
 
     private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
-    private String mqttServerAddress = "tcp://127.0.0.1:1883";
+    private String mqttServerAddress = "tcp://192.168.0.136:1883";
 
     private MqttClient client = null;
 
@@ -40,6 +40,7 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
             @Override
             public void messageArrived(String t, MqttMessage m) throws Exception {
                 // Expect csv
+                LOGGER.debug("Message arrived in mqtt with topic {}", t);
                 String response = new String(m.getPayload()).trim();
                 /*
                 String[] splittedResponse = response.split(",");
