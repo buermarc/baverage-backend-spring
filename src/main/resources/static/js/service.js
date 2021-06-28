@@ -136,12 +136,13 @@ let addSpotElement = (spot, tisch_id, container) => {
     newSpotElement.querySelectorAll("div")[1].textContent = spot.name==""?"Frei":spot.name; //Spot mit Name oder "Frei" beschriften
     container.appendChild(newSpotElement); //Neuen Platz hinzufügen
     fetch("./api/getKundeByPlatzId?id="+spot.id).then( //Tisch von Spring Endpoint abrufen
-        response => {return response.json();} //Response zu JSON parsen
+        result => {return result.json();} //Response zu JSON parsen
     ).then(
-        data => {
+        customer => {
             container.lastElementChild.addEventListener("click", () => { //Click Event zum Bestellen hinzufügen
-                openOrderPage(spot.id, tisch_id, spot.name, data.id);
+                openOrderPage(spot.id, tisch_id, spot.name, customer.id);
             });
+            console.log(customer);
             //Farbe basierend auf Füllstand des jeweiligen Platzes
             let lastOrder = spot.bestellungen[spot.bestellungen.length - 1];
             let lastMeasurement = lastOrder.messpunkte[lastOrder.messpunkte.length - 1];
