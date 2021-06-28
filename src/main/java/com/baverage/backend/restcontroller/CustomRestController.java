@@ -45,6 +45,7 @@ import com.baverage.backend.dto.CreateUserRequest;
 import com.baverage.backend.dto.EmptySeat;
 import com.baverage.backend.dto.IdClass;
 import com.baverage.backend.dto.NewBestellung;
+import com.baverage.backend.dto.Lieferung;
 
 @Controller
 @RequestMapping(path = "/api")
@@ -132,7 +133,7 @@ public class CustomRestController {
     }
 
     @GetMapping(value = "/getLieferungen")
-    public @ResponseBody Iterable<Bestellungen> getLieferungen() {
+    public @ResponseBody Iterable<Lieferung> getLieferungen() {
         return this.bestellungRepo.getLieferungen(Stati.Status.VORBEREITET.getId());
     }
 
