@@ -39,3 +39,28 @@ let pad = (val) => {
       return valString;
     }
 };
+
+//Offset Zeit berechnen und neuen Timer starten
+startOffsetTimer = (span, order) => {
+    let now = new Date(); //Systemzeit
+    let hour = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+    let t = order.zeitpunkt_vorbereitet.split(/[T : .]/); //Zeitstempel in Bestellung per RegEx an "T, : und ." spalten
+    let minutesSinceStart;
+    let secondsSinceStart;
+    t[1] += 2; //Zeitzonenanpassung
+
+    if(hour > t[1]) { //Wenn die aktuelle Stunde nach der Bestellstunde liegt
+        minutesSinceStart = 60 - t[2] + minutes; //Rest zur vollen Stunde + aktuelle Minuten
+    } else if(hour == t[1]) {
+        minutesSinceStart = minutes - t[2]; //Aktuelle Minute - Bestellminute
+    }
+
+    if(minutes > t[2]) { //Wenn die aktuelle Minute nach der Bestellminute liegt
+        secondsSinceStart = 60 - t[3] + seconds; //Restliche Sekunden zur vollen Minute + aktuelle Sekunden
+    } else {
+        secondsSinceStart = seconds - t[3]; //Aktuelle Sekunde - Startsekunde
+    }
+    startTimer(span, minutesSinceStart, secondsSinceStart);
+}

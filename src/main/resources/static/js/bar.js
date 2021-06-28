@@ -3,8 +3,18 @@
 */
 
 //Beim öffnen / neu laden der Seite
-window.onload = () => { 
-    generateNextOrders(); //Alle offenen Bestellungen generieren
+window.onload = () => {
+    generateDeliveries(); //Ausstehende Lieferungen generieren
+    for (let index = 0; index < 4; index++) {
+        generateNextOrder(); //Alle offenen Bestellungen generieren
+    }    
+    setInterval(() => { //Lieferungen und Tischübersicht alle 10 Sekunden aktualisieren
+        for (let index = 0; index < 4; index++) {
+            generateNextOrder(); //Alle offenen Bestellungen generieren
+            generateDeliveries(); //Ausstehende Lieferungen generieren
+        }    
+    }, 10000) //10 Sekunden warten
+
     updateRfidConnection(true); //RFID Verbindungsanzeige
     //TODO RFID Verbindungsstatus abfragen
 }
@@ -32,22 +42,57 @@ let drinkDone = (drinkId) => {
     doneArea = getDoneArea(toDoArea); //Done Area ermitteln
     doneArea.appendChild(drink); //Drink von ToDo entfernen und Done anhängen
     
-    //Wenn durch den Drink alle Bestellungen für den Tisch abgeschlossen wurden, wird eine neue Lieferung angelegt und alle Bestellungen rücken von rechts nach links auf
-    if(toDoArea.childElementCount == 1) {
-        newDelivery(toDoArea.firstElementChild.innerHTML); //Neue Lieferung anlegen
-        moveOrders(toDoArea); //Von Rechts nach Links aufrücken
-    }
+    (async () => {
+        const rawResponse = await fetch('./api/setBestellungsStatusVorbereitet', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({id : parseInt(drinkId.split(/[_]/)[1])})
+        });
+        const content = await rawResponse.json();
+        console.log("Bestellung vorbereitet: " + drinkId);
+        //Wenn durch den Drink alle Bestellungen für den Tisch abgeschlossen wurden, wird eine neue Lieferung angelegt und alle Bestellungen rücken von rechts nach links auf
+        if(toDoArea.childElementCount == 1) {
+            generateDeliveries(); //Neue Lieferung anlegen
+            moveOrders(toDoArea); //Von Rechts nach Links aufrücken
+        }
+    })();
 };
 
+let generateDeliveries = () => {
+    fetch("./api/getLieferungen", {mode: 'cors'}).then( //fetch Spring Endpoint
+        response => {
+            let jsonResponse = response.json();
+            return jsonResponse;
+        } //parse response zu json
+    ).then(
+        data => {
+            tische = [];
+            document.getElementById("delivery_items").innerHTML = '<div class="order_tablenumber">Liefern</div><!-- Template für eine Lieferung --><template id="outgoing_delivery"><div class="outgoing_delivery"><span class="outgoing_tablenumber">Tisch 1</span><span class="deliverytime"><span>00</span>:<span>00</span></span></div></template>';
+            data.some(order => { //durch alle Bestellungen iterieren
+                if(tische.includes(order.tisch_id)) {
+                    return false;
+                } else {
+                    newDelivery("Tisch " + order.tisch_id, order);
+                    tische.push(order.tisch_id);
+                }
+            });
+        }
+    );
+}
+
 //Neue Lieferung für bestimmte Tischnummer in linker Spalte hinzufügen
-let newDelivery = (tablenumber) => {
+let newDelivery = (tablenumber, order=null) => {
     let deliverCol = document.getElementById("delivery_items"); //Lieferspalte ermitteln
     let template = document.getElementById("outgoing_delivery"); //Template ermitteln
     let newDeliveryElement = template.content.cloneNode(true); //Template content copieren
     let spans = newDeliveryElement.querySelectorAll('span'); //Spans des Templates auswählen
     spans[0].textContent = tablenumber; //ersten Span mit Tischnummer beschriften
     deliverCol.appendChild(newDeliveryElement); //Lieferung der Spalte hinzufügen
-    startTimer(spans[1]); //Timer in zweitem Span starten
+    if(order != null) startOffsetTimer(spans[1], order); //Timer in zweitem Span starten
+    if(order == null) startTimer(spans[1]);
 };
 
 //Alle Bestellungen rechts des fertiggestellten Bereichs nach links verschieben
@@ -55,7 +100,7 @@ let moveOrders = (finishedArea) => {
     if(finishedArea.id == "toDo4") { //Wenn der fertiggestellte Bereich ganz rechts ist
         finishedArea.innerHTML = ""; //Bereich leeren
         document.getElementById("done4").innerHTML = ""; //Bereich leeren
-        generateNextOrders(); //Neue Bestellung aus Backlog generieren
+        generateNextOrder(); //Neue Bestellung aus Backlog generieren
         return; //Ende der Rekursion
     }
     let nextToDoArea = finishedArea.parentElement.nextElementSibling.firstElementChild; //nächsten Bereich ermitteln
@@ -67,36 +112,38 @@ let moveOrders = (finishedArea) => {
 };
 
 //Nächste Spalten mit Bestellungen generieren
-let generateNextOrders = () => {
-    fetch("./api/getOffeneBestellungen").then( //fetch Spring Endpoint
+let generateNextOrder = () => {
+    fetch("./api/getOffeneBestellungen", {mode: 'cors'}).then( //fetch Spring Endpoint
         response => {
-            console.log(response);
-            let jsonResponse = JSON.parse(response);
-            console.log(jsonResponse);
+            let jsonResponse = response.json();
             return jsonResponse;
         } //parse response zu json
     ).then(
         data => {
-            while((toDoArea = getFirstEmptyColumn()) != null) { //solange es weitere leere Spalten gibt
-                data.bestellungen.some(order => { //durch alle Bestellungen iterieren
-                    if(document.getElementById("drink_" + order.id) == null){ //wenn die Bestellung noch nicht auf dem Frontend vorhanden ist
-                        toDoArea.innerHTML = '<div class="order_tablenumber">Tisch '+ order.tischId +'</div>'; //Spalte für Tischnummer der Bestellung anlegen
-                        generateOrdersForTable(data, order.tischId, toDoArea); //Alle offenen Bestellungen für den gewählten Tisch erzeugen
-                        return true; //Iterieren beenden wenn alle Bestellungen für den ermittelten Tisch hinzugefügt wurden
-                    } else {
-                        return false; //weiter iterieren wenn Bestellung schon angezeigt wird
-                    }
-                });
-            }
+            toDoArea = getFirstEmptyColumn();
+            data.some(order => { //durch alle Bestellungen iterieren
+                if(document.getElementById("drink_" + order.id) == null && order.status == 1){ //wenn die Bestellung noch nicht auf dem Frontend vorhanden ist
+                    toDoArea.innerHTML = '<div class="order_tablenumber">Tisch '+ order.tisch_id +'</div>'; //Spalte für Tischnummer der Bestellung anlegen
+                    generateOrdersForTable(data, order.tisch_id, toDoArea); //Alle offenen Bestellungen für den gewählten Tisch erzeugen
+                    return true; //Iterieren beenden wenn alle Bestellungen für den ermittelten Tisch hinzugefügt wurden
+                } else {
+                    return false; //weiter iterieren wenn Bestellung schon angezeigt wird
+                }
+            });
         }
     );
 }
 
-let generateOrdersForTable = (data, tischId, toDoArea) => {
-    data.bestellungen.forEach(order => { //durch alle Bestellungen iterieren
-        if(order.tischId == tischId) { //jede Bestellung mit der zuvor ermittelten TischId
+let generateOrdersForTable = (data, tisch_id, toDoArea) => {
+    data.forEach(order => { //durch alle Bestellungen iterieren
+        if(order.tisch_id == tisch_id) { //jede Bestellung mit der zuvor ermittelten TischId
             let newOrder = createNewOrder(order); //Neues Bestellungselement erzeugen
-            toDoArea.appendChild(newOrder); //Bestellung der Spalte hinzufügen
+            if(order.status == 1) {
+                toDoArea.appendChild(newOrder); //Bestellung der Spalte hinzufügen
+            }
+            if(order.status == 2) {
+                getDoneArea(toDoArea).appendChild(newOrder);
+            }
         }
     })
 }
@@ -107,7 +154,7 @@ let createNewOrder = (order) => {
     newOrder.id = "drink_" + order.id; //Id vergeben
     newOrder.className = "order_item"; //Klasse zuweisen
     newOrder.setAttribute("onClick", "drinkDone(this.id)"); //OnClick funktion zuweisen
-    newOrder.innerHTML = order.getraenkname + " " + order.getraenkgroesse; //Beschriftung zuweisen
+    newOrder.innerHTML = order.getraenkname + " " + order.getraengroesse/1000; //Beschriftung zuweisen
     return newOrder;
 }
 

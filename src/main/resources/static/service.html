@@ -4,6 +4,7 @@
     <head>
         <title>Service-Frontend</title>
         <link rel="stylesheet" href="css/service.css">
+        <meta charset="utf-8">
         <!-- 
             Das Service Frontend ist in 3 Unterseiten <div>s aufgeteilt, die per js ein- und ausgeblendet werden. 
             Dadurch gehen Daten aus der vorherigen Ansicht nicht verloren. Neue Daten werden per fetch() asynchron aus dem Spring Backend per HTTP Requests abgerufen.
@@ -63,6 +64,7 @@
             <div id="spot_header">
                 <span id="button_done" onclick="guestDone()">D1</span>
                 <span id="button_new" onclick="newGuest()">+</span>
+                <span id="kunde_id" hidden="hidden"></span>
                 <span id="name">Person 5</span>
                 <span id="tablenr">T9</span>
             </div>

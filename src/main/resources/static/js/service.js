@@ -35,50 +35,23 @@ let addDeliveryElement = (order, container) => {
     let template = document.getElementById("overview_item_template"); //Template auswählen
     let newDeliveryElement = template.content.cloneNode(true); //Template Inhalt kopieren
     let spans = newDeliveryElement.querySelectorAll('span'); //Spans im Template auswählen
-    spans[0].textContent = "Tisch " + order.tischId; //Tisch beschriften
+    spans[0].textContent = "Tisch " + order.tisch_id; //Tisch beschriften
     container.appendChild(newDeliveryElement); //Neue Lieferung hinzufügen
     startOffsetTimer(spans[1], order); //Timer mit offset Zeit starten
 }
 
-//Offset Zeit berechnen und neuen Timer starten
-startOffsetTimer = (span, order) => {
-    let now = new Date(); //Systemzeit
-    let hour = now.getHours();
-    let minutes = now.getMinutes();
-    let seconds = now.getSeconds();
-    let t = order.zeitpunkt_vorbereitet.split(/[T : .]/); //Zeitstempel in Bestellung per RegEx an "T, : und ." spalten
-    let minutesSinceStart;
-    let secondsSinceStart;
-    
-    if(hour > t[1]) { //Wenn die aktuelle Stunde nach der Bestellstunde liegt
-        minutesSinceStart = 60 - t[2] + minutes; //Rest zur vollen Stunde + aktuelle Minuten
-        minutesSinceStart = minutesSinceStart % 60;
-    } else if(hour == t[1]) {
-        minutesSinceStart = minutes - t[2]; //Aktuelle Minute - Bestellminute
-    }
-
-    if(minutes > t[2]) { //Wenn die aktuelle Minute nach der Bestellminute liegt
-        secondsSinceStart = 60 - t[3] + seconds; //Restliche Sekunden zur vollen Minute + aktuelle Sekunden
-        minutesSinceStart += parseInt(secondsSinceStart / 60); //Falls Sekunden über 60 sind, Minuten hinzufügen
-        secondsSinceStart = secondsSinceStart % 60; //Rest von Sekunden > 60
-    } else {
-        secondsSinceStart = seconds - t[3]; //Aktuelle Sekunde - Startsekunde
-    }
-    startTimer(span, minutesSinceStart, secondsSinceStart);
-}
-
 //Alle Lieferungen auf der Overview Page generieren
 let generateDeliveries = () => {
-    fetch("./resources/lieferung.json").then( //Fetch Spring Endpoint 
+    fetch("./api/getLieferungen").then( //Fetch Spring Endpoint 
         response => {return response.json();} //Response in JSON parsen
     ).then(
         data => {
             let tische = []; //Array mit allen angezeigten Tischnummern
             let container = document.getElementById("deliveries");
             container.innerHTML = '<div class="title">Liefern</div>';
-            data.bestellungen_lieferbar.some(order => {
-                if(tische.includes(order.tischId)) return false; //Abbruch falls TischId bereits generiert wurde
-                tische.push(order.tischId) //Tisch der Liste hinzufügen
+            data.some(order => {
+                if(tische.includes(order.tisch_id)) return false; //Abbruch falls tisch_id bereits generiert wurde
+                tische.push(order.tisch_id) //Tisch der Liste hinzufügen
                 addDeliveryElement(order, container); //Tisch auf der Seite generieren 
             });
             addDummyElement(container); //Dummy Element für Justify hinzufügen
@@ -91,33 +64,33 @@ let addTableElement = (order, container) => {
     let template = document.getElementById("overview_item_tables_template"); //Tisch Template auswählen          
     let newTableElement = template.content.cloneNode(true); //Template Inhalt kopieren
     let spans = newTableElement.querySelectorAll('span'); //Alle Spans im Template auswählen
-    spans[0].textContent = "Tisch " + order.tischId;
+    spans[0].textContent = "Tisch " + order.tisch_id;
     spans[1].querySelectorAll("span")[0].textContent = "1"; //Default 1 / X wartend (da Tisch angelegt wird wenn das erste leere Getränk erkannt wird)
-    spans[1].querySelectorAll("span")[1].textContent = order.plaetzeAmTisch;
+    spans[1].querySelectorAll("span")[1].textContent = order.plaetze_am_tisch;
     container.appendChild(newTableElement); //Tisch hinzufügen
     container.lastElementChild.addEventListener("click", () => { //Click Event zu zuletzt hinzugefügtem Element
-        openTableOverview(order.tischId);
+        openTableOverview(order.tisch_id);
     });
     return container.lastElementChild; //Neu hinzugefügtes Element zurückgeben
 }
 
 //Zahl der wartenden Kunden erhöhen wenn für den Tisch bereits ein Feld vorhanden ist
 let updateNumberOfWaitingCustomers = (tische, tischElemente, order) => {
-    let x = tische.indexOf(order.tischId); //Index der Bestellung im tische Array
+    let x = tische.indexOf(order.tisch_id); //Index der Bestellung im tische Array
     let tischElement = tischElemente[x]; //Dazugehöriges Element am selben Index wie ID
     let numberSpan = tischElement.querySelectorAll("span")[1].querySelectorAll("span")[0];
     let currentNumber = parseInt(numberSpan.textContent); //Aktuelle Zahl auslesen
     numberSpan.textContent = currentNumber + 1; //Zahl erhöhen
-    if((currentNumber + 1) / order.plaetzeAmTisch >= 0.5) { //Wenn mehr als 50% warten --> Rot
+    if((currentNumber + 1) / order.plaetze_am_tisch >= 0.5) { //Wenn mehr als 50% warten --> Rot
         tischElement.style.backgroundColor = "red";
-    } else if((currentNumber + 1) / order.plaetzeAmTisch >= 0.3) { //Wenn mehr als 30% warten --> Gelb
+    } else if((currentNumber + 1) / order.plaetze_am_tisch >= 0.3) { //Wenn mehr als 30% warten --> Gelb
         tischElement.style.backgroundColor = "yellow";
     }
 }
 
 //Tischübersicht generieren (Page 1)
 let generateTableOverview = () => {
-    fetch("./resources/emptySpots.json").then( //Alle (fast) Leeren Plätze aus Spring Backend abrufen
+    fetch("./api/getLeerePlaetze").then( //Alle (fast) Leeren Plätze aus Spring Backend abrufen
         response => {return response.json();} //Response zu JSON parsen
     ).then(
         data => {
@@ -125,12 +98,12 @@ let generateTableOverview = () => {
             container.innerHTML = '<div class="title">Bestellung aufnehmen</div>';
             let tische = []; //Array mit Tisch IDs
             let tischElemente = []; //Array mit Tisch Elementen
-            data.leerePlaetze.some(order => { //Für jede Bestellung
-                if(tische.includes(order.tischId)) { //Falls bereits ein Tisch mit der Tisch ID in der Bestellung angelegt ist
+            data.some(order => { //Für jede Bestellung
+                if(tische.includes(order.tisch_id)) { //Falls bereits ein Tisch mit der Tisch ID in der Bestellung angelegt ist
                     updateNumberOfWaitingCustomers(tische, tischElemente, order); //Zahl der wartenden Kunden erhöhen
                     return false;
                 }
-                tische.push(order.tischId); //Neue Tisch ID in Liste aufnehmen
+                tische.push(order.tisch_id); //Neue Tisch ID in Liste aufnehmen
                 tischElemente.push(addTableElement(order, container)); //Neues Tisch Element erzeugen und in Liste aufnehmen
             });
             addDummyElement(container); //Dummy Element für Justify generieren
@@ -139,17 +112,17 @@ let generateTableOverview = () => {
 }
 
 //Übersicht eines bestimmten Tisches anzeigen (Page 2)
-let openTableOverview = (tischId) => {
+let openTableOverview = (tisch_id) => {
     showPage("page_table"); //Table Page anzeigen
-    document.getElementById("table_number").innerHTML = "Tisch " + tischId; //Überschrift an Tisch ID anpassen
-    fetch("./resources/tisch.json").then( //Tisch von Spring Endpoint abrufen
+    document.getElementById("table_number").innerHTML = "Tisch " + tisch_id; //Überschrift an Tisch ID anpassen
+    fetch("./api/getTisch?id="+tisch_id).then( //Tisch von Spring Endpoint abrufen
         response => {return response.json();} //Response zu JSON parsen
     ).then(
         data => {
             let container = document.getElementById("table_spots");
             container.innerHTML = ""; //Container leeren
             data.plaetze.forEach(spot => { //Für jeden Platz ein Element hinzufügen
-                addSpotElement(spot, tischId, container); //Platz generieren und hinzufpgen
+                addSpotElement(spot, tisch_id, container); //Platz generieren und hinzufpgen
             });
             addDummyElement(container); //Dummy Element für Justify hinzufügen
         }
@@ -157,28 +130,37 @@ let openTableOverview = (tischId) => {
 }
 
 //Neuen Platz auf Tischübersicht generieren
-let addSpotElement = (spot, tischId, container) => {
+let addSpotElement = (spot, tisch_id, container) => {
     let template = document.getElementById("spot_template"); //Platz Template auswählen
     let newSpotElement = template.content.cloneNode(true); //Template Inhalt kopieren
     newSpotElement.querySelectorAll("div")[1].textContent = spot.name==""?"Frei":spot.name; //Spot mit Name oder "Frei" beschriften
     container.appendChild(newSpotElement); //Neuen Platz hinzufügen
-    container.lastElementChild.addEventListener("click", () => { //Click Event zum Bestellen hinzufügen
-        openOrderPage(spot.id, tischId, spot.name);
-    });
+    fetch("./api/getKundeByPlatzId?id="+spot.id).then( //Tisch von Spring Endpoint abrufen
+        response => {return response.json();} //Response zu JSON parsen
+    ).then(
+        data => {
+            container.lastElementChild.addEventListener("click", () => { //Click Event zum Bestellen hinzufügen
+                openOrderPage(spot.id, tisch_id, spot.name, data.id);
+            });
+        }
+    )
 
     //Farbe basierend auf Füllstand des jeweiligen Platzes
-    if(spot.fuellstand > 0.3) { //Mehr als 30% --> Grün
+    let lastOrder = spot.bestellungen[spot.bestellungen.length - 1];
+    let lastMeasurement = lastOrder.messpunkte[lastOrder.messpunkte.length - 1];
+
+    if(lastMeasurement.fuellstand > 0.3) { //Mehr als 30% --> Grün
         container.lastElementChild.style.backgroundColor = "green";
-    } else if(spot.fuellstand <= 0.3 && spot.name != "") { //30% oder weniger --> Gelb
+    } else if(lastMeasurement.fuellstand <= 0.3 && spot.name != "") { //30% oder weniger --> Gelb
         container.lastElementChild.style.backgroundColor = "yellow";
     }
-    if(spot.fuellstand <= 0.1 && spot.name != "") { //10% oder weniger --> Rot
+    if(lastMeasurement.fuellstand <= 0.1 && spot.name != "") { //10% oder weniger --> Rot
         container.lastElementChild.style.backgroundColor = "red";
     }
 }
 
 //Übersicht über Platz / Getränke anzeigen (Page 3)
-let openOrderPage = (platzId, tischId, name) => {
+let openOrderPage = (platzId, tisch_id, name, kunde_id) => {
     showPage("page_order"); //Platz / Getränkeübersicht öffnen
     if(name == "") { //Titel mit Name / "Frei" beschriften
         document.getElementById("name").innerHTML = "Frei";
@@ -189,15 +171,16 @@ let openOrderPage = (platzId, tischId, name) => {
         document.getElementById("button_done").style.display = "block";
         document.getElementById("button_new").style.display = "none";
     } 
-    document.getElementById("tablenr").innerHTML = "T"+tischId; //Tisch ID anzeigen
-    fetch("./resources/getraenke.json").then( //Getränkeliste im Spring Endpoint abrufen
+    document.getElementById("kunde_id").innerHTML = kunde_id;
+    document.getElementById("tablenr").innerHTML = "T"+tisch_id; //Tisch ID anzeigen
+    fetch("./api/getGetraenke").then( //Getränkeliste im Spring Endpoint abrufen
         response => {return response.json();} //Response zu JSON parsen
     ).then(
         data => {
             let container = document.getElementById("spot_drinks"); //Container wählen
             container.innerHTML = ""; //Container leeren
-            data.getraenke.forEach(drink => { //Für jedes Getränk im Backend
-                addDrinkElement(drink, container); //Getränk Tile erzeugen und hinzufügen
+            data.forEach(drink => { //Für jedes Getränk im Backend
+                addDrinkElement(drink, container, platzId); //Getränk Tile erzeugen und hinzufügen
             });
             addDummyElement(container); //Dummy Element für Justify hinzufügen
         }
@@ -205,14 +188,24 @@ let openOrderPage = (platzId, tischId, name) => {
 }
 
 //Neues Getränk anlegen und hinzufügen
-let addDrinkElement = (drink, container) => {
+let addDrinkElement = (drink, container, platz_id) => {
     let template = document.getElementById("drink_template"); //Drink Template auswählen
     let newDrinkElement = template.content.cloneNode(true); //Template Inhalt kopieren
-    newDrinkElement.querySelectorAll("div")[1].textContent = drink.name + " " + drink.groesse; //Getränk Element beschriften
+    newDrinkElement.querySelectorAll("div")[1].textContent = drink.name + " " + drink.groesse/1000; //Getränk Element beschriften
     container.appendChild(newDrinkElement); //Neues Getränk hinzufpgen
     container.lastElementChild.addEventListener("click", () => { //Click Event zu Getränk hinzufügen
-        //TODO: Bestellung in Backend anlegen
-        showPage("page_table"); //Bestellseite schließen wenn Getränk ausgewählt wurde
+        (async () => {
+            const rawResponse = await fetch('./api/createBestellung', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({platz_id : platz_id, getraenk_id : drink.id})
+            });
+            const content = await rawResponse.json();
+            showPage("page_table"); //Bestellseite schließen wenn Getränk ausgewählt wurde
+        })();
     });
 }
 
@@ -246,4 +239,16 @@ let guestDone = () => {
     document.getElementById("button_done").style.display = "none";
     document.getElementById("button_new").style.display = "block";
     //TODO: Backend User beenden
+    (async () => {
+        const rawResponse = await fetch('./api/setKundeBezahlt', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({id : parseInt(document.getElementById("kunde_id").innerHTML)})
+        });
+        const content = await rawResponse.json();
+        showPage("page_table"); //Bestellseite schließen wenn Getränk ausgewählt wurde
+    })();
 }
