@@ -142,21 +142,20 @@ let addSpotElement = (spot, tisch_id, container) => {
             container.lastElementChild.addEventListener("click", () => { //Click Event zum Bestellen hinzufügen
                 openOrderPage(spot.id, tisch_id, spot.name, data.id);
             });
+            //Farbe basierend auf Füllstand des jeweiligen Platzes
+            let lastOrder = spot.bestellungen[spot.bestellungen.length - 1];
+            let lastMeasurement = lastOrder.messpunkte[lastOrder.messpunkte.length - 1];
+
+            if(lastMeasurement.fuellstand > 0.3) { //Mehr als 30% --> Grün
+                container.lastElementChild.style.backgroundColor = "green";
+            } else if(lastMeasurement.fuellstand <= 0.3 && spot.name != "") { //30% oder weniger --> Gelb
+                container.lastElementChild.style.backgroundColor = "yellow";
+            }
+            if(lastMeasurement.fuellstand <= 0.1 && spot.name != "") { //10% oder weniger --> Rot
+                container.lastElementChild.style.backgroundColor = "red";
+            }
         }
     )
-
-    //Farbe basierend auf Füllstand des jeweiligen Platzes
-    let lastOrder = spot.bestellungen[spot.bestellungen.length - 1];
-    let lastMeasurement = lastOrder.messpunkte[lastOrder.messpunkte.length - 1];
-
-    if(lastMeasurement.fuellstand > 0.3) { //Mehr als 30% --> Grün
-        container.lastElementChild.style.backgroundColor = "green";
-    } else if(lastMeasurement.fuellstand <= 0.3 && spot.name != "") { //30% oder weniger --> Gelb
-        container.lastElementChild.style.backgroundColor = "yellow";
-    }
-    if(lastMeasurement.fuellstand <= 0.1 && spot.name != "") { //10% oder weniger --> Rot
-        container.lastElementChild.style.backgroundColor = "red";
-    }
 }
 
 //Übersicht über Platz / Getränke anzeigen (Page 3)
