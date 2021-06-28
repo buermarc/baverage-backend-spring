@@ -7,15 +7,24 @@ window.onload = () => {
     generateDeliveries(); //Ausstehende Lieferungen generieren
     for (let index = 0; index < 4; index++) {
         generateNextOrder(); //Alle offenen Bestellungen generieren
-    }    
+    }
     setInterval(() => { //Lieferungen und Tischübersicht alle 10 Sekunden aktualisieren
         for (let index = 0; index < 4; index++) {
             generateNextOrder(); //Alle offenen Bestellungen generieren
             generateDeliveries(); //Ausstehende Lieferungen generieren
-        }    
+        }
     }, 10000) //10 Sekunden warten
 
-    updateRfidConnection(true); //RFID Verbindungsanzeige
+    let ws_address = location.origin.replace(new RegExp('https?'), 'ws') + "/web-socket";
+    let socket = new WebSocket(ws_address);
+
+    socket.addEventListener('message', function (event) {
+        console.log("Found a bottle with the rfid: " + event.data);
+        updateRfidConnection(true); //RFID Verbindungsanzeige
+    });
+
+
+    updateRfidConnection(false); //RFID Verbindungsanzeige
     //TODO RFID Verbindungsstatus abfragen
 }
 
@@ -41,7 +50,7 @@ let drinkDone = (drinkId) => {
     toDoArea = drink.parentElement;
     doneArea = getDoneArea(toDoArea); //Done Area ermitteln
     doneArea.appendChild(drink); //Drink von ToDo entfernen und Done anhängen
-    
+
     (async () => {
         const rawResponse = await fetch('./api/setBestellungsStatusVorbereitet', {
           method: 'POST',
@@ -51,6 +60,7 @@ let drinkDone = (drinkId) => {
           },
           body: JSON.stringify({id : parseInt(drinkId.split(/[_]/)[1])})
         });
+        updateRfidConnection(false);
         const content = await rawResponse.json();
         console.log("Bestellung vorbereitet: " + drinkId);
         //Wenn durch den Drink alle Bestellungen für den Tisch abgeschlossen wurden, wird eine neue Lieferung angelegt und alle Bestellungen rücken von rechts nach links auf
