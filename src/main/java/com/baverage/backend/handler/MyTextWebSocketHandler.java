@@ -23,7 +23,7 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
 
     private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
-    private String mqttServerAddress = "tcp://192.168.178.123:1883";
+    private String mqttServerAddress = "tcp://127.0.0.1:1883";
 
     private MqttClient client = null;
 
