@@ -15,17 +15,20 @@ window.onload = () => {
         }
     }, 10000) //10 Sekunden warten
 
-    let ws_address = location.origin.replace(new RegExp('https?'), 'ws') + "/web-socket";
-    let socket = new WebSocket(ws_address);
+    updateRfidConnection(false); //RFID Verbindungsanzeige initial Rot
+    //Websocket zur Statusanzeige, ob ein Getränkt / RFID Chip auf dem Reader erkannt wurde
+    let ws_address = location.origin.replace(new RegExp('https?'), 'ws') + "/web-socket"; //http / https in URL durch ws ersetzen
+    let socket = new WebSocket(ws_address); //Websocket instanzieren
 
+    //Websocket event Listener --> Wenn Tag auf Reader gestellt wird
     socket.addEventListener('message', function (event) {
         console.log("Found a bottle with the rfid: " + event.data);
-        updateRfidConnection(true); //RFID Verbindungsanzeige
+        updateRfidConnection(true); //RFID Verbindungsanzeige grün schalten
     });
 
-
-    updateRfidConnection(false); //RFID Verbindungsanzeige
-    //TODO RFID Verbindungsstatus abfragen
+    setInterval(() => { 
+        updateRfidConnection(false); //RFID Verbindungsanzeige Rot setzen
+    }, 5000) //5 Sekunden warten
 }
 
 //Zur ToDo Area zugehörige DoneArea ermitteln und zurückgeben
@@ -168,6 +171,8 @@ let createNewOrder = (order) => {
     return newOrder;
 }
 
+
+//Statussymbol für RFID Connection updaten
 let updateRfidConnection = (connected) => {
     if(connected) {
         document.getElementById("rfid_status").style.backgroundColor = "green";

@@ -1,5 +1,7 @@
 <script src="js/timer.js"></script>
+<!-- service.js verwenden, wenn MySQL Backend verfügbar ist, service_offline.js wenn Web standalone getestet wird-->
 <script src="js/service.js"></script>
+<!-- <script src="js/service_offline.js"></script> -->
 <html>
     <head>
         <title>Service-Frontend</title>
@@ -14,7 +16,7 @@
     </head>
     <body>
         <!-- Erste Seite - Tische und Lieferungen -->
-        <div id="page_overview" class="frame">
+        <div id="page_overview" class="frame page">
             <!-- Template Lieferung-->
             <template id="overview_item_template">
                 <div class="overview_item">
@@ -37,12 +39,12 @@
             </div>
             <!-- Button unten am Bildschirm falls ein Tisch,
                  der nicht in der Liste erscheint etwas bestellen möchte-->
-            <div id="special_order">
+            <div id="special_order" onclick="specialOrder()">
                 Sonderbestellung
             </div>
         </div>
         <!-- Zweite Seite - Einzelner Tisch mit X Plätzen -->
-        <div id="page_table" class="frame">
+        <div id="page_table" class="frame page">
             <div id="table_number">Tisch 6</div>
             <!-- Template für einzelnen Platz am Tisch-->
             <template id="spot_template">
@@ -54,16 +56,17 @@
                 <!-- Hier werden die einzelnen Plätze generiert -->
             </div>
             <!-- Tischübersicht schließen und zurück zur ersten Seite-->
-            <div id="table_close" onclick="showPage('page_overview')">
+            <div id="table_close" onclick="showPage(0)">
                 Schließen
             </div>
         </div>
         <!-- Dritte Seite - Einzelner Platz mit Übersicht aller Getränke zur Auswahl -->
-        <div id="page_order" class="frame">
+        <div id="page_order" class="frame page">
             <!-- Kopfzeile mit Name des Kunden, Tischnummer und Button zum beenden einer Session-->
             <div id="spot_header">
                 <span id="button_done" onclick="guestDone()">D1</span>
                 <span id="button_new" onclick="newGuest()">+</span>
+                <span id="platz_id" hidden="hidden"></span>
                 <span id="kunde_id" hidden="hidden"></span>
                 <span id="name">Person 5</span>
                 <span id="tablenr">T9</span>
@@ -87,6 +90,11 @@
             <div>Neuer Gast:</div>
             <input id="customer_name">
             <div onclick="newGuestSubmit(this)">Anlegen</div>
+        </div>
+        <div id="table_input">
+            <div>Tisch öffnen:</div>
+            <input id="table_id" type="number">
+            <div onclick="openTableSubmit(this)">Öffnen</div>
         </div>
     </body>
 </html>

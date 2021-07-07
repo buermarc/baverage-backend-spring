@@ -3,27 +3,50 @@
         {
             "id": 1,
             "fuellstand": 0.3,
-            "name": "Lena"
+            "name": "Lena",
+            "bestellungen": [
+                {
+                    "id": 1,
+                    "messpunkte": [
+                        {
+                            "id": 1,
+                            "fuellstand": 0.23
+                        }
+                    ]
+                }
+            ]
         },
         {
             "id": 2,
             "fuellstand": 0.0,
-            "name": "Maurice"
+            "name": "Maurice",
+            "bestellungen": [
+                {
+                    "id": 2,
+                    "messpunkte": [
+                        {
+                            "id": 2,
+                            "fuellstand": 0.5
+                        }
+                    ]
+                }
+            ]
         },
         {
             "id": 3,
             "fuellstand": 0.8,
-            "name": "Nico"
-        },
-        {
-            "id": 4,
-            "fuellstand": 0.2,
-            "name": "Marc"
-        },
-        {
-            "id": 5,
-            "fuellstand": 0.0,
-            "name": ""
+            "name": "Nico",
+            "bestellungen": [
+                {
+                    "id": 3,
+                    "messpunkte": [
+                        {
+                            "id": 3,
+                            "fuellstand": 0.05
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

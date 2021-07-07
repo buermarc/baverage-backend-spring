@@ -14,12 +14,12 @@ window.onload = () => {
 
 let showPage = (pageId) => {
     //Alle Seiten verstecken
-    document.getElementById("page_overview").style.display = "none";
-    document.getElementById("page_order").style.display = "none";
-    document.getElementById("page_table").style.display = "none";
+    document.getElementsByClassName("page")[0].style.display = "none";
+    document.getElementsByClassName("page")[1].style.display = "none";
+    document.getElementsByClassName("page")[2].style.display = "none";
 
     //Gewünschte Seite anzeigen
-    document.getElementById(pageId).style.display = "block";
+    document.getElementsByClassName("page")[pageId].style.display = "block";
 }
 
 //Leeres Dummy Element anhängen um justify korrekt darzustellen
@@ -42,7 +42,8 @@ let addDeliveryElement = (order, container) => {
 
 //Alle Lieferungen auf der Overview Page generieren
 let generateDeliveries = () => {
-    fetch("./api/getLieferungen").then( //Fetch Spring Endpoint 
+//    fetch("./resources/lieferung.json").then( //Test ohne MySQL Backend
+    fetch("./api/getLieferungen").then( //Fetch Spring Endpoint    
         response => {return response.json();} //Response in JSON parsen
     ).then(
         data => {
@@ -90,6 +91,7 @@ let updateNumberOfWaitingCustomers = (tische, tischElemente, order) => {
 
 //Tischübersicht generieren (Page 1)
 let generateTableOverview = () => {
+//    fetch("./resources/emptySpots.json").then(  //Test ohne MySQL Backend
     fetch("./api/getLeerePlaetze").then( //Alle (fast) Leeren Plätze aus Spring Backend abrufen
         response => {return response.json();} //Response zu JSON parsen
     ).then(
@@ -111,10 +113,27 @@ let generateTableOverview = () => {
     )
 }
 
+//Button Sonderbestellung -> Eingabefeld öffnen
+let specialOrder = () => {
+    document.getElementById("table_input").style.display = "block";
+    let input = document.getElementById("table_id");
+    input.focus(); //Cursor auf Input Feld setzen
+    input.select();
+}
+
+//Sonderbestellung Tisch öffnen
+let openTableSubmit = (element) => {
+    let input = element.parentElement.querySelectorAll("input")[0];
+    let input_tableId = input.value;
+    document.getElementById("table_input").style.display = "none";
+    openTableOverview(input_tableId);
+}
+
 //Übersicht eines bestimmten Tisches anzeigen (Page 2)
 let openTableOverview = (tisch_id) => {
-    showPage("page_table"); //Table Page anzeigen
+    showPage(1); //Table Page anzeigen
     document.getElementById("table_number").innerHTML = "Tisch " + tisch_id; //Überschrift an Tisch ID anpassen
+//    fetch("./resources/tisch.json").then( //Test ohne MySQL Backend
     fetch("./api/getTisch?id="+tisch_id).then( //Tisch von Spring Endpoint abrufen
         response => {return response.json();} //Response zu JSON parsen
     ).then(
@@ -136,19 +155,17 @@ let addSpotElement = (spot, tisch_id, container) => {
     newSpotElement.querySelectorAll("div")[1].textContent = spot.name==""?"Frei":spot.name; //Spot mit Name oder "Frei" beschriften
     container.appendChild(newSpotElement); //Neuen Platz hinzufügen
     let spotElement = container.lastElementChild;
+//    fetch("./resources/kunde"+spot.id+".json").then( //Test ohne MySQL Backend
     fetch("./api/getKundeByPlatzId?id="+spot.id).then( //Tisch von Spring Endpoint abrufen
         result => {return result.json();} //Response zu JSON parsen
     ).then(
         customer => {
-            console.log(spotElement);
             spotElement.addEventListener("click", () => { //Click Event zum Bestellen hinzufügen
                 openOrderPage(spot.id, tisch_id, spot.name, customer.id);
             });
-            console.log(customer);
-            console.log(spot);
             //Farbe basierend auf Füllstand des jeweiligen Platzes
-            let lastOrder = spot.bestellungen[spot.bestellungen.length - 1];
-            let lastMeasurement = lastOrder.messpunkte[lastOrder.messpunkte.length - 1];
+            let lastOrder = spot.bestellungen[spot.bestellungen.length - 1]; //Letzte Bestellung des Tisches ermitteln
+            let lastMeasurement = lastOrder.messpunkte[lastOrder.messpunkte.length - 1]; //Letzten Messwert der Bestellung ermitteln
 
             if(lastMeasurement.fuellstand > 0.3) { //Mehr als 30% --> Grün
                 spotElement.style.backgroundColor = "green";
@@ -164,7 +181,7 @@ let addSpotElement = (spot, tisch_id, container) => {
 
 //Übersicht über Platz / Getränke anzeigen (Page 3)
 let openOrderPage = (platzId, tisch_id, name, kunde_id) => {
-    showPage("page_order"); //Platz / Getränkeübersicht öffnen
+    showPage(2);//Platz / Getränkeübersicht öffnen
     if(name == "") { //Titel mit Name / "Frei" beschriften
         document.getElementById("name").innerHTML = "Frei";
         document.getElementById("button_new").style.display = "block";
@@ -175,6 +192,7 @@ let openOrderPage = (platzId, tisch_id, name, kunde_id) => {
         document.getElementById("button_new").style.display = "none";
     } 
     document.getElementById("kunde_id").innerHTML = kunde_id;
+    document.getElementById("platz_id").innerHTML = platzId;
     document.getElementById("tablenr").innerHTML = "T"+tisch_id; //Tisch ID anzeigen
     fetch("./api/getGetraenke").then( //Getränkeliste im Spring Endpoint abrufen
         response => {return response.json();} //Response zu JSON parsen
@@ -197,6 +215,7 @@ let addDrinkElement = (drink, container, platz_id) => {
     newDrinkElement.querySelectorAll("div")[1].textContent = drink.name + " " + drink.groesse/1000; //Getränk Element beschriften
     container.appendChild(newDrinkElement); //Neues Getränk hinzufpgen
     container.lastElementChild.addEventListener("click", () => { //Click Event zu Getränk hinzufügen
+        //Backend neue Bestellung anlegen
         (async () => {
             const rawResponse = await fetch('./api/createBestellung', {
               method: 'POST',
@@ -207,7 +226,7 @@ let addDrinkElement = (drink, container, platz_id) => {
               body: JSON.stringify({platz_id : platz_id, getraenk_id : drink.id})
             });
             const content = await rawResponse.json();
-            showPage("page_table"); //Bestellseite schließen wenn Getränk ausgewählt wurde
+            showPage(1);//Bestellseite schließen wenn Getränk ausgewählt wurde
         })();
     });
 }
@@ -230,7 +249,18 @@ let newGuestSubmit = (element) => {
         return;
     }
     document.getElementById("name").innerHTML = input_name;
-    //TODO: Backend neuen User anlegen
+    //Backend neuen Kunden anlegen
+    (async () => {
+        const rawResponse = await fetch('./api/createKunde', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({platz_id : document.getElementById("platz_id").innerHTML, name:input_name})
+        });
+        const content = await rawResponse.json();
+    })();
     document.getElementById("name_input").style.display = "none";
     document.getElementById("button_done").style.display = "block";
     document.getElementById("button_new").style.display = "none";
@@ -241,7 +271,7 @@ let guestDone = () => {
     document.getElementById("name").innerHTML = "Frei";
     document.getElementById("button_done").style.display = "none";
     document.getElementById("button_new").style.display = "block";
-    //TODO: Backend User beenden
+    //Backend User beenden
     (async () => {
         const rawResponse = await fetch('./api/setKundeBezahlt', {
           method: 'POST',
@@ -252,6 +282,7 @@ let guestDone = () => {
           body: JSON.stringify({id : parseInt(document.getElementById("kunde_id").innerHTML)})
         });
         const content = await rawResponse.json();
-        showPage("page_table"); //Bestellseite schließen wenn Getränk ausgewählt wurde
+        //showPage("page_table"); //Bestellseite schließen wenn Getränk ausgewählt wurde
+        showPage(1);
     })();
 }
