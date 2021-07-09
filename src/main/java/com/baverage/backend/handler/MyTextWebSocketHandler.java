@@ -64,16 +64,6 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
                     }
                 });
 
-                /*
-                WebSocketSession webSocketSession = sessions.stream()
-                        .filter(sessionX -> splittedResponse[0].equals(sessionX.getId())).findAny().orElse(null);
-
-                if (webSocketSession == null) {
-                    LOGGER.error("WebSocketSession with the id: {} was not found", splittedResponse[0]);
-                    return;
-                }
-                webSocketSession.sendMessage(new TextMessage(splittedResponse[1]));
-                */
             }
 
             @Override
