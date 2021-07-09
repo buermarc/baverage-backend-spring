@@ -93,9 +93,11 @@ public class CustomRestController {
                 Stati.Status.VORBEREITET.getId());
         // Use the latest rfid we found to set the corresponding glas as the glas of the ready order
         try {
-            Glaeser glas = this.glasRepo.findByRfid(MyTextWebSocketHandler.lastRfid);
+            // We access the latest seen rfid, and check if it belongs to any known glas
+            String lastRfid = MyTextWebSocketHandler.getLastRfid();
+            Glaeser glas = this.glasRepo.findByRfid(lastRfid);
             if (glas == null) {
-                LOGGER.error("Could not find any glas with the rfid '{}'", MyTextWebSocketHandler.lastRfid);
+                LOGGER.error("Could not find any glas with the rfid '{}'", lastRfid);
             }
             Bestellungen bestellung = this.bestellungRepo.findById(idClass.getId()).get();
             if (bestellung == null) {

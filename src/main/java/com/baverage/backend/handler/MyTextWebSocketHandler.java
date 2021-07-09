@@ -20,9 +20,13 @@ import org.springframework.core.env.Environment;
 public class MyTextWebSocketHandler extends TextWebSocketHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MyTextWebSocketHandler.class);
-    public static String lastRfid = "NORFIDYET";
 
     private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
+    public static String getLastRfid() {
+        return MyTextWebSocketHandler.lastRfid;
+    }
+
+    private static String lastRfid = "NORFIDYET";
 
     private String mqttServerAddress = "tcp://192.168.0.136:1883";
 
