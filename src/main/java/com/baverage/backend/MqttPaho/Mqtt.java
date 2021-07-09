@@ -42,6 +42,9 @@ public class Mqtt {
     @Value("${mqtt.server.address}")
     private String mqttServerAddress;
 
+    @Value("${mqtt.server.port}")
+    private String mqttServerPort;
+
     private MqttClient client;
 
 
@@ -50,7 +53,7 @@ public class Mqtt {
 
         LOGGER.debug("Registered MQTT Handler");
 
-        client = new MqttClient("tcp://" + this.mqttServerAddress, UUID.randomUUID().toString());
+        client = new MqttClient("tcp://" + this.mqttServerAddress + ":" + this.mqttServerPort, UUID.randomUUID().toString());
 
         client.setCallback(new MqttCallback() {
             public void connectionLost(Throwable throwable) {

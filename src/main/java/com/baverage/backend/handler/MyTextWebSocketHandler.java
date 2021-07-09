@@ -21,21 +21,33 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MyTextWebSocketHandler.class);
 
-    private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
     public static String getLastRfid() {
         return MyTextWebSocketHandler.lastRfid;
     }
 
     private static String lastRfid = "NORFIDYET";
 
-    private String mqttServerAddress = "tcp://192.168.0.136:1883";
+    private String mqttServerAddress;
+    private String mqttServerPort;
+
+    /*
+     * Override default constructor to pass the mqtt address
+     */
+    public MyTextWebSocketHandler(String mqttServerAddress, String mqttServerPort) {
+        super();
+        this.mqttServerAddress = mqttServerAddress;
+        this.mqttServerPort = mqttServerPort;
+    }
+
+    private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
     private MqttClient client = null;
 
     MqttClient initClient() throws MqttException {
 
-        LOGGER.error("Server name that was loaded is: {}", mqttServerAddress);
-        client = new MqttClient(mqttServerAddress, MqttClient.generateClientId());
+        LOGGER.error("Server name that was loaded is: {}:{}", this.mqttServerAddress, this.mqttServerPort);
+
+        client = new MqttClient("tcp://" + this.mqttServerAddress + ":" + this.mqttServerPort, MqttClient.generateClientId());
         client.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable throwable) {

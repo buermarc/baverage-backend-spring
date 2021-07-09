@@ -1,6 +1,7 @@
 mqtt:
   server:
     address: ${MQTT_SA}
+    port: ${MQTT_SP}
 
 logging:
   level:
