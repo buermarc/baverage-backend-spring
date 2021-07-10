@@ -92,14 +92,19 @@ public class CustomRestController {
         int rows = this.bestellungRepo.setBestellungsStatusVorbereitet(idClass.getId(), new Date(),
                 Stati.Status.VORBEREITET.getId());
         // Use the latest rfid we found to set the corresponding glas as the glas of the ready order
+        // TODO move this into a seperate service function?
+
+        String lastRfid = null;
+        Glaeser glas = null;
+        Bestellungen bestellung = null;
         try {
             // We access the latest seen rfid, and check if it belongs to any known glas
-            String lastRfid = MyTextWebSocketHandler.getLastRfid();
-            Glaeser glas = this.glasRepo.findByRfid(lastRfid);
+            lastRfid = MyTextWebSocketHandler.getLastRfid();
+            glas = this.glasRepo.findByRfid(lastRfid);
             if (glas == null) {
                 LOGGER.error("Could not find any glas with the rfid '{}'", lastRfid);
             }
-            Bestellungen bestellung = this.bestellungRepo.findById(idClass.getId()).get();
+            bestellung = this.bestellungRepo.findById(idClass.getId()).get();
             if (bestellung == null) {
                 LOGGER.error("Could not find any bestellung with the id '{}'. I think this should not be possible", idClass.getId());
             }
@@ -108,6 +113,25 @@ public class CustomRestController {
         } catch (Exception e) {
             LOGGER.error("While trying to set the glas we failed. Exception {}", e.toString());
         }
+
+        // Based on the glass and the getraenke id of the besetellung we can
+        // get a sane default initialgewicht, because at the moment our bar
+        // station has no mass measurement sensor
+        // TODO equip the bar station with a mass measurement sensor
+        try {
+            int leergewicht = glas.getLeergewicht();
+            Getraenke getraenk = this.getraenkRepo.findById(bestellung.getGetraenk().getId()).get();
+            if (getraenk == null) {
+                LOGGER.error("Could not find any getraenk with the id '{}'. I think this should not be possible", bestellung.getGetraenk().getId());
+            }
+            int groesse = getraenk.getGroesse();
+            bestellung.setInitialgewicht((double) (groesse + leergewicht - 50));
+            this.bestellungRepo.save(bestellung);
+        } catch (Exception e) {
+            LOGGER.error("While trying to set the initialgewicht we failed. Exception {}", e.toString());
+        }
+
+
         UpdateQueryResponse res = new UpdateQueryResponse();
         if (rows == 1) {
             res.setSuccess(true);
@@ -142,12 +166,12 @@ public class CustomRestController {
 
     @GetMapping(value = "/getKundeByPlatzId")
     public @ResponseBody Kunden getKundeByPlatzId(@RequestParam int id) {
-        
+
 	Kunden kunde = this.kundeRepo.findLatestByPlatzId(id);
 	if (kunde == null) {
 		LOGGER.warn("kunde is null with id {}", id);
 	}
-        return kunde; 
+        return kunde;
     }
 
     @GetMapping(value = "/getGetraenke")
