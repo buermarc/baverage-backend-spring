@@ -2,7 +2,7 @@ package com.baverage.backend.repo;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.baverage.backend.DatabaseConnection.Stati;
+import com.baverage.backend.databaseConnection.Stati;
 
 /**
  * Erlaubt angepasste Export Mappings des Repositories

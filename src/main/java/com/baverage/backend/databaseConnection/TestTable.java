@@ -1,4 +1,4 @@
-package com.baverage.backend.DatabaseConnection;
+package com.baverage.backend.databaseConnection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,9 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Data;
@@ -24,13 +21,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @Setter
-public class Tische implements Serializable{
+public class TestTable implements Serializable{
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
-	
-	@OneToMany (mappedBy="tisch")
-	List <Plaetze> plaetze= new ArrayList<Plaetze>();
 	
 	String name="";
 }

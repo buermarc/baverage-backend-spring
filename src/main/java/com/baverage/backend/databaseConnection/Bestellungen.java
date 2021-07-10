@@ -1,4 +1,4 @@
-package com.baverage.backend.DatabaseConnection;
+package com.baverage.backend.databaseConnection;
 
 import java.io.Serializable;
 import java.util.Date;

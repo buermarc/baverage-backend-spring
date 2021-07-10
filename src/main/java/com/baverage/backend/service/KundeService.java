@@ -1,6 +1,6 @@
 package com.baverage.backend.service;
 
-import com.baverage.backend.DatabaseConnection.Kunden;
+import com.baverage.backend.databaseConnection.Kunden;
 import com.baverage.backend.repo.KundeRepo;
 import com.baverage.backend.repo.PlatzRepo;
 

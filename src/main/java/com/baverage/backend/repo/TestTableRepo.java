@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 //import org.springframework.data.repository.repository.Repository;
 
-import com.baverage.backend.DatabaseConnection.TestTable;
+import com.baverage.backend.databaseConnection.TestTable;
 
 /**
  * Erlaubt angepasste Export Mappings des Repositories

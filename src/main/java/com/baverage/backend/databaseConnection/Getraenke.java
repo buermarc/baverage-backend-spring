@@ -1,20 +1,19 @@
-package com.baverage.backend.DatabaseConnection;
+package com.baverage.backend.databaseConnection;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import java.util.List;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Data
@@ -23,18 +22,21 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Getter
 @Setter
-public class Messpunkte implements Serializable{
-	
+public class Getraenke implements Serializable{
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	
-	double fuellstand;
+	@OneToMany (mappedBy="getraenk")
+        @JsonBackReference
+	private List<Bestellungen> bestellungen;
 	
-	Date zeitpunkt;
+	String name="";
 	
-	@ManyToOne
-	@JsonBackReference
-	private Bestellungen bestellungen;
-
+	int groesse;
+	
+	double preis;
+	
+	double alkoholgehalt;
 }

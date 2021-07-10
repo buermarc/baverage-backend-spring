@@ -1,4 +1,4 @@
-package com.baverage.backend.DatabaseConnection;
+package com.baverage.backend.databaseConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

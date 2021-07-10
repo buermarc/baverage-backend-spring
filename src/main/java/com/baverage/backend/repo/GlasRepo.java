@@ -16,9 +16,9 @@ import org.springframework.data.repository.CrudRepository;
 //import org.springframework.data.repository.repository.Repository;
 
 import com.baverage.backend.dto.OffeneBestellung;
-import com.baverage.backend.DatabaseConnection.Bestellungen;
-import com.baverage.backend.DatabaseConnection.Stati.Status;
-import com.baverage.backend.DatabaseConnection.Glaeser;
+import com.baverage.backend.databaseConnection.Bestellungen;
+import com.baverage.backend.databaseConnection.Stati.Status;
+import com.baverage.backend.databaseConnection.Glaeser;
 
 /**
  * Erlaubt angepasste Export Mappings des Repositories

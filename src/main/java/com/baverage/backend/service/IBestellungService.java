@@ -1,6 +1,6 @@
 package com.baverage.backend.service;
 
-import com.baverage.backend.DatabaseConnection.Bestellungen;
+import com.baverage.backend.databaseConnection.Bestellungen;
 
 public interface IBestellungService {
 

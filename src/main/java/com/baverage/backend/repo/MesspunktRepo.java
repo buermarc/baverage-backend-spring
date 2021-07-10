@@ -2,7 +2,7 @@ package com.baverage.backend.repo;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.baverage.backend.DatabaseConnection.Messpunkte;
+import com.baverage.backend.databaseConnection.Messpunkte;
 
 /**
  * Erlaubt angepasste Export Mappings des Repositories

@@ -21,10 +21,10 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
-import com.baverage.backend.DatabaseConnection.Bestellungen;
-import com.baverage.backend.DatabaseConnection.Glaeser;
-import com.baverage.backend.DatabaseConnection.Messpunkte;
-import com.baverage.backend.DatabaseConnection.Stati;
+import com.baverage.backend.databaseConnection.Bestellungen;
+import com.baverage.backend.databaseConnection.Glaeser;
+import com.baverage.backend.databaseConnection.Messpunkte;
+import com.baverage.backend.databaseConnection.Stati;
 import com.baverage.backend.repo.BestellungRepo;
 import com.baverage.backend.repo.MesspunktRepo;
 
