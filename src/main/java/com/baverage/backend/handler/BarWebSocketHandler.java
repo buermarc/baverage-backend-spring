@@ -14,8 +14,6 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-//import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 
 public class BarWebSocketHandler extends TextWebSocketHandler {
 
@@ -25,7 +23,7 @@ public class BarWebSocketHandler extends TextWebSocketHandler {
         return BarWebSocketHandler.lastRfid;
     }
 
-    private static String lastRfid = "NORFIDYET";
+    private static String lastRfid = "NO_RFID_YET";
 
     private String mqttServerAddress;
     private String mqttServerPort;
@@ -43,11 +41,15 @@ public class BarWebSocketHandler extends TextWebSocketHandler {
 
     private MqttClient client = null;
 
+    /*
+     * Initialize a connection to the MQTT Broker defined at object construction
+     */
     MqttClient initClient() throws MqttException {
 
         LOGGER.debug("Server name that was loaded is: {}:{}", this.mqttServerAddress, this.mqttServerPort);
 
-        client = new MqttClient("tcp://" + this.mqttServerAddress + ":" + this.mqttServerPort, MqttClient.generateClientId());
+        client = new MqttClient("tcp://" + this.mqttServerAddress + ":" + this.mqttServerPort,
+                MqttClient.generateClientId());
         client.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable throwable) {
@@ -55,22 +57,17 @@ public class BarWebSocketHandler extends TextWebSocketHandler {
 
             @Override
             public void messageArrived(String t, MqttMessage m) throws Exception {
-                // Expect csv
-                LOGGER.debug("Message arrived in mqtt with topic {}", t);
-                String response = new String(m.getPayload()).trim();
-                /*
-                String[] splittedResponse = response.split(",");
-                if (splittedResponse.length != 2) {
-                    LOGGER.error("Received read with invalid layou, msg: {}", response);
-                    return;
-                }
-                */
-                response = response.trim();
-                final String msg = response;
+
+                // If we receive a message we expect an RFID
+                final String response = new String(m.getPayload()).trim();
+                LOGGER.debug("Message: '{}' arrived in mqtt with topic: '{}'", t, response);
+
                 lastRfid = response;
+
+                // Broadcast to all open connections, currently we should only have one
                 sessions.forEach(webSocketSession -> {
                     try {
-                        webSocketSession.sendMessage(new TextMessage(msg));
+                        webSocketSession.sendMessage(new TextMessage(response));
                     } catch (IOException e) {
                         LOGGER.error("Error occurred.", e);
                     }
@@ -84,8 +81,8 @@ public class BarWebSocketHandler extends TextWebSocketHandler {
         });
 
         client.connect();
-
         client.subscribe("rfidTags");
+
         return client;
     }
 
@@ -102,20 +99,18 @@ public class BarWebSocketHandler extends TextWebSocketHandler {
                 }
             }
         } catch (MqttException e) {
+
             LOGGER.error("Found MqttException: {}", e.toString());
             LOGGER.error("Probably server down");
+
             return;
         }
 
-        MqttMessage message = new MqttMessage(session.getId().getBytes());
-        client.publish("rfid_request", message);
-        LOGGER.debug("Published rfid request '{}' to topic 'rfid_request'", message);
+        LOGGER.debug("Establishe a connection via WebSocket with the id {}", session.getId());
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        // We should not close the whole mqtt connection each time any websocket disconnects
-        // this.client.disconnect();
         sessions.remove(session);
         super.afterConnectionClosed(session, status);
     }
