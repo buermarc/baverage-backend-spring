@@ -17,12 +17,12 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
-public class MyTextWebSocketHandler extends TextWebSocketHandler {
+public class BarWebSocketHandler extends TextWebSocketHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MyTextWebSocketHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BarWebSocketHandler.class);
 
     public static String getLastRfid() {
-        return MyTextWebSocketHandler.lastRfid;
+        return BarWebSocketHandler.lastRfid;
     }
 
     private static String lastRfid = "NORFIDYET";
@@ -33,7 +33,7 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
     /*
      * Override default constructor to pass the mqtt address
      */
-    public MyTextWebSocketHandler(String mqttServerAddress, String mqttServerPort) {
+    public BarWebSocketHandler(String mqttServerAddress, String mqttServerPort) {
         super();
         this.mqttServerAddress = mqttServerAddress;
         this.mqttServerPort = mqttServerPort;

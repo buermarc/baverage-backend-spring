@@ -46,7 +46,7 @@ import com.baverage.backend.dto.EmptySeat;
 import com.baverage.backend.dto.IdClass;
 import com.baverage.backend.dto.NewBestellung;
 import com.baverage.backend.dto.Lieferung;
-import com.baverage.backend.handler.MyTextWebSocketHandler;
+import com.baverage.backend.handler.BarWebSocketHandler;
 
 @Controller
 @RequestMapping(path = "/api")
@@ -94,7 +94,7 @@ public class CustomRestController {
         Bestellungen bestellung = null;
         try {
             // We access the latest seen rfid, and check if it belongs to any known glas
-            lastRfid = MyTextWebSocketHandler.getLastRfid();
+            lastRfid = BarWebSocketHandler.getLastRfid();
             glas = this.glasRepo.findByRfid(lastRfid);
             if (glas == null) {
                 LOGGER.error("Could not find any glas with the rfid '{}'", lastRfid);
