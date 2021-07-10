@@ -144,7 +144,7 @@ public class Mqtt {
                 double fuellstand = (double) mass / (initialgewicht - leergewicht);
 
                 // Check if the order is set to ordered, if yes set it to delivered
-                if (bestellung.getStatus().getId() == Stati.Status.BESTELLT.getId()) {
+                if (bestellung.getStatus().getId() == Stati.Status.VORBEREITET.getId()) {
 
                     if (!bestellung.getGlas().getRfid().equals(rfid)) {
                         // We would expect a different bottle based on the rfid
