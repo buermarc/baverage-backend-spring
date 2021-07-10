@@ -260,17 +260,6 @@ public class CustomRestController {
         return this.testTableRepo.findAll();
     }
 
-    @PostMapping(path = "/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewUser(@RequestParam String name) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
-
-        TestTable n = new TestTable();
-        n.setName(name);
-        testTableRepo.save(n);
-        return "Saved";
-    }
-
     @GetMapping(path = "/allTables")
     public @ResponseBody Collection<TestTable> getAllTables() {
         // This returns a JSON or XML with the users
