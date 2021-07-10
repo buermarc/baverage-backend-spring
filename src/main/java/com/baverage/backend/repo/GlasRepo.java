@@ -1,8 +1,5 @@
 package com.baverage.backend.repo;
 
-//import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-//import org.springframework.stereotype.Repository;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Date;
@@ -21,12 +18,13 @@ import com.baverage.backend.DatabaseConnection.Stati.Status;
 import com.baverage.backend.DatabaseConnection.Glaeser;
 
 /**
- * Erlaubt angepasste Export Mappings des Repositories
+ * Erlaubt angepasste Export Mappings des Repositories der Gläser
  */
-//@RepositoryRestResource
+
 @org.springframework.stereotype.Repository
 public interface GlasRepo extends CrudRepository<Glaeser, Integer>{
-
+	
+	// Get all drinks with certain rfid
     @Query("Select g from Glaeser g where g.rfid = :rfid")
     Glaeser findByRfid(@Param("rfid") String rfid);
 

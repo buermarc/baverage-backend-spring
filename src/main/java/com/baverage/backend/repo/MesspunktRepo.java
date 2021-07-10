@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.baverage.backend.DatabaseConnection.Messpunkte;
 
 /**
- * Erlaubt angepasste Export Mappings des Repositories
+ * Erlaubt angepasste Export Mappings des Repositories der Messpunkte
  */
 @org.springframework.stereotype.Repository
 public interface MesspunktRepo extends CrudRepository<Messpunkte, Integer>{

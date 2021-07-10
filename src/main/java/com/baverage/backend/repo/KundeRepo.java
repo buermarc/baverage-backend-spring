@@ -1,7 +1,5 @@
 package com.baverage.backend.repo;
 
-//import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-//import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,16 +19,19 @@ import com.baverage.backend.DatabaseConnection.Stati.Status;
 import com.baverage.backend.DatabaseConnection.Kunden;
 
 /**
- * Erlaubt angepasste Export Mappings des Repositories
+ * Erlaubt angepasste Export Mappings des Repositories der Kunden
  */
-//@RepositoryRestResource
+
 @org.springframework.stereotype.Repository
 public interface KundeRepo extends CrudRepository<Kunden, Integer>{
+	
+	// update customer after he/she/it paid
     @Modifying
     @Transactional
     @Query("UPDATE Kunden k set k.bezahlt = true WHERE k.id = :kunde_id")
     int setKundeBezahlt(@Param("kunde_id") int kunde_id);
 
+    // Get all customers who havent paid yet 
     @Query("SELECT k FROM Kunden k WHERE k.platz.id = :platz_id AND k.zeitpunkt_abgeschlossen = null AND k.bezahlt = false")
     Kunden findLatestByPlatzId(@Param("platz_id") int platz_id);
 }

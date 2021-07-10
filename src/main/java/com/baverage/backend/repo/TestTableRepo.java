@@ -13,7 +13,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.baverage.backend.DatabaseConnection.TestTable;
 
 /**
- * Erlaubt angepasste Export Mappings des Repositories
+ * Erlaubt angepasste Export Mappings des Repositories des 
  */
 //@RepositoryRestResource
 @org.springframework.stereotype.Repository
