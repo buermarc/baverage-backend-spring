@@ -9,6 +9,10 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+/*
+ * This class contains all information to create a user request.
+ */
+
 @Data
 @Getter
 @Setter

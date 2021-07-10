@@ -19,6 +19,12 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/*
+ * This class contains all the necessary information about the seats.
+ * To use Getters and Setters, you have to have Lombok installed. 
+ * This class is a database table.
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

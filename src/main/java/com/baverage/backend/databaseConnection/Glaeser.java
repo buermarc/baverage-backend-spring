@@ -15,7 +15,11 @@ import javax.persistence.GeneratedValue;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
+/*
+ * This class contains all the necessary information about the drinking classes.
+ * To use Getters and Setters, you have to have Lombok installed. 
+ * This class is a database table.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
