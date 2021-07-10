@@ -16,6 +16,11 @@ import java.util.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/*
+ * BestellungService class that implements our IBestellungService.  We use it
+ * as it is easier to create a new Bestellung, through the Java API then
+ * through using Queries.
+ */
 @Service
 public class BestellungService implements IBestellungService {
 
