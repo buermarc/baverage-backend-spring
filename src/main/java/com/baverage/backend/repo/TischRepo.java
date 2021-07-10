@@ -1,7 +1,5 @@
 package com.baverage.backend.repo;
 
-//import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-//import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,9 +19,9 @@ import com.baverage.backend.databaseConnection.Stati.Status;
 import com.baverage.backend.databaseConnection.Tische;
 
 /**
- * Erlaubt angepasste Export Mappings des Repositories
+ * Erlaubt angepasste Export Mappings des Repositories des Tisches
  */
-//@RepositoryRestResource
+
 @org.springframework.stereotype.Repository
 public interface TischRepo extends CrudRepository<Tische, Integer>{
 	
