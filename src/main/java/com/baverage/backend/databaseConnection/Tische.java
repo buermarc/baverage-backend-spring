@@ -17,7 +17,11 @@ import lombok.Setter;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-
+/*
+ * This class contains all the necessary information about the dining tables.
+ * To use Getters and Setters, you have to have Lombok installed. 
+ * This class is a database table.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

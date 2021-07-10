@@ -15,6 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+/*
+ * This class contrains all the necessary information about drinks such as name, size etc..
+ * To use Getters and Setters, you have to have Lombok installed. 
+ * This class is a database table.
+ */
 
 @Data
 @AllArgsConstructor

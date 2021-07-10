@@ -15,6 +15,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/*
+ * This class contains all the necessary information about the measuring points.
+ * To use Getters and Setters, you have to have Lombok installed. 
+ * This class is a database table.
+ * 
+ * The status is definend in an enum.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

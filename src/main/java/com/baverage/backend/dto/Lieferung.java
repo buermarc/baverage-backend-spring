@@ -10,7 +10,10 @@ import lombok.Setter;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-
+/*
+ * This is a data transfer object which is necessary to read json objects which this information.
+ * In this case, this is responsible for the delivery process.
+ */
 @Data
 @Getter
 @Setter
