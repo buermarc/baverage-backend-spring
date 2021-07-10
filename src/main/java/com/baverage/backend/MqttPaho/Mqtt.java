@@ -61,7 +61,7 @@ public class Mqtt {
 
             public void messageArrived(String t, MqttMessage m) throws Exception {
                 String message = new String(m.getPayload());
-                topicHandler("massBavarage", message);
+                topicHandler("massBeverage", message);
             }
 
             public void deliveryComplete(IMqttDeliveryToken t) {
@@ -69,12 +69,12 @@ public class Mqtt {
         });
 
         client.connect();
-        client.subscribe("massBavarage");
+        client.subscribe("massBeverage");
     }
 
     public void topicHandler(String topic, String message) throws MqttException {
         switch (topic) {
-            case "massBavarage":
+            case "massBeverage":
                 // mac, rfid, gewicht -> mac -> platz -> bestellung -> neuen Messpunkt ->
                 // Gewicht
                 // Rechnen
