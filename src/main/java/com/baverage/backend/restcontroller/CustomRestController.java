@@ -80,15 +80,14 @@ public class CustomRestController {
         return this.bestellungRepo.getOffeneBestellungen();
     }
 
-    // TODO better error handling if it does not work
     @PostMapping(path = "/setBestellungsStatusVorbereitet", consumes = "application/json")
     public @ResponseBody UpdateQueryResponse setBestellungsStatusVorbereitet(@RequestBody IdClass idClass) {
         // This returns a JSON or XML with the users
         int rows = this.bestellungRepo.setBestellungsStatusVorbereitet(idClass.getId(), new Date(),
                 Stati.Status.VORBEREITET.getId());
         // Use the latest rfid we found to set the corresponding glas as the glas of the ready order
-        // TODO move this into a seperate service function?
 
+        // TODO move this into a seperate service function?
         String lastRfid = null;
         Glaeser glas = null;
         Bestellungen bestellung = null;
@@ -234,18 +233,5 @@ public class CustomRestController {
     @GetMapping(value = "/getLeerePlaetze")
     public @ResponseBody Iterable<EmptySeat> getLeerePlaetze(Model model) {
         return this.bestellungRepo.getLeerePlaetze();
-    }
-
-
-    // funktional unnoetig ~ Marc
-
-    @GetMapping(value = "/getAlleBestellungen")
-    public @ResponseBody Iterable<Bestellungen> alleBestellungen(Model model) {
-        return this.bestellungRepo.findAll();
-    }
-
-    @GetMapping(value = "/getID")
-    public @ResponseBody Iterable<Bestellungen> getID(Model model) {
-        return this.bestellungRepo.getID();
     }
 }

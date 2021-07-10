@@ -28,14 +28,6 @@ public interface BestellungRepo extends CrudRepository<Bestellungen, Integer> {
 	@Query("SELECT NEW com.baverage.backend.dto.OffeneBestellung(b.id, platz.tisch.id, get.name, get.groesse, b.status.id) FROM Bestellungen b INNER JOIN b.getraenk get ON b.getraenk = get.id INNER JOIN b.platz platz ON b.platz = platz.id WHERE b.status = 1 OR b.status = 2")
 	Collection<OffeneBestellung> getOffeneBestellungen();
 
-	// Get all orders
-	@Query("SELECT b FROM Bestellungen b")
-	Collection<Bestellungen> getAlleBestellungen();
-
-	// get all orders with id 1
-	@Query("SELECT b FROM Bestellungen b WHERE b.id = 1")
-	Collection<Bestellungen> getID();
-
 	// Update of an order containing status and time
 	@Modifying
 	@Transactional
