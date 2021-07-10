@@ -1,5 +1,7 @@
 package com.baverage.backend.dto;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Data;
@@ -11,6 +13,7 @@ import lombok.NoArgsConstructor;
  * This is a data transfer object.
  */
 
+@Data
 @Getter
 @Setter
 @AllArgsConstructor

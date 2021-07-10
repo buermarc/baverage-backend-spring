@@ -1,5 +1,7 @@
 package com.baverage.backend.dto;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Data;
