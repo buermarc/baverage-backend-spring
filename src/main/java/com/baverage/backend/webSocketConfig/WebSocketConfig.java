@@ -1,4 +1,4 @@
-package com.baverage.backend.config;
+package com.baverage.backend.webSocketConfig;
 
 import com.baverage.backend.handler.MyTextWebSocketHandler;
 import org.springframework.context.annotation.Configuration;
