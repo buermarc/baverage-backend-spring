@@ -1,4 +1,4 @@
-package com.baverage.backend.MqttPaho;
+package com.baverage.backend.mqttPaho;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

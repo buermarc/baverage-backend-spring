@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
 import com.baverage.backend.databaseConnection.DBConnection;
-import com.baverage.backend.MqttPaho.Mqtt;
+import com.baverage.backend.mqttPaho.Mqtt;
 
 @SpringBootApplication
 public class BackendApplication {
