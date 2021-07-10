@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "tisch_id": 1,
+        "plaetze_am_tisch": 6,
+        "platzId" : 1,
+        "fuellstand": 0.3 
+    },
+    {
+        "id": 2,
+        "tisch_id": 1,
+        "plaetze_am_tisch": 6,
+        "platzId" : 1,
+        "fuellstand": 0.2 
+    },
+    {
+        "id": 3,
+        "tisch_id": 2,
+        "plaetze_am_tisch": 6,
+        "platzId" : 1,
+        "fuellstand": 0.0 
+    },
+    {
+        "id": 4,
+        "tisch_id": 2,
+        "plaetze_am_tisch": 6,
+        "platzId" : 1,
+        "fuellstand": 0.23 
+    },
+    {
+        "id": 5,
+        "tisch_id": 4,
+        "plaetze_am_tisch": 6,
+        "platzId" : 1,
+        "fuellstand": 0.05 
+    },
+    {
+        "id": 6,
+        "tisch_id": 1,
+        "plaetze_am_tisch": 6,
+        "platzId" : 1,
+        "fuellstand": 0.15 
+    }
+]

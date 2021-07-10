@@ -1,0 +1,31 @@
+<!-- Dritte Seite - Einzelner Platz mit Übersicht aller Getränke zur Auswahl -->
+<div id="page_order" class="frame page">
+    <!-- Kopfzeile mit Name des Kunden, Tischnummer und Button zum beenden einer Session-->
+    <div id="spot_header">
+        <span id="button_done">D1</span>
+        <span id="button_new">+</span>
+        <span id="platz_id" hidden="hidden"></span>
+        <span id="kunde_id" hidden="hidden"></span>
+        <span id="name">Person 5</span>
+        <span id="tablenr">T9</span>
+    </div>
+    <!-- Template für ein Getränk -->
+    <template id="drink_template">
+        <div class="drink">
+            <div class="text"></div>
+        </div>
+    </template>
+    <div id="spot_drinks">
+        <!-- Hier wird die Liste aller Getränke generiert-->
+    </div>
+    <!-- Abbrechen Button, falls der Kunde doch nicht bestellen möchte -->
+    <div id="spot_cancel">
+        Abbrechen
+    </div>
+</div>
+<!-- Pop-Up zur Namenseingabe -->
+<div id="name_input">
+    <div>Neuer Gast:</div>
+    <input id="customer_name">
+    <div id="button_newGuestSubmit">Anlegen</div>
+</div>

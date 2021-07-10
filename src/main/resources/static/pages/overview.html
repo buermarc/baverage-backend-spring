@@ -1,0 +1,33 @@
+<!-- Erste Seite - Tische und Lieferungen -->
+<div id="page_overview" class="frame page">
+    <!-- Template Lieferung-->
+    <template id="overview_item_template">
+        <div class="overview_item">
+            <span class="outgoing_tablenumber">Tisch 1</span>
+            <span class="deliverytime"><span>00</span>:<span>00</span></span>
+        </div>
+    </template>
+    <div id="deliveries">
+        <!-- Hier werden Lieferungen generiert-->
+    </div>
+    <!-- Template Tischauslastung -->
+    <template id="overview_item_tables_template">
+        <div class="overview_item">
+            <span class="outgoing_tablenumber">Tisch 1</span> 
+            <span class="table_capacity"><span></span>/<span></span></span>
+        </div>
+    </template>
+    <div id="ordering">
+        <!-- Hier werden Tischauslastungen generiert-->
+    </div>
+    <!-- Button unten am Bildschirm falls ein Tisch,
+         der nicht in der Liste erscheint etwas bestellen möchte-->
+    <div id="special_order">
+        Sonderbestellung
+    </div>
+</div>
+<div id="table_input">
+    <div>Tisch öffnen:</div>
+    <input id="table_id" type="number">
+    <div id="button_submitTable">Öffnen</div>
+</div>

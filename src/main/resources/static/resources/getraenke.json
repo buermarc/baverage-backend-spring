@@ -1,28 +1,26 @@
-{
-    "getraenke": [
-        {
-            "id": 1,
-            "name": "Cola",
-            "groesse": "0.5",
-            "preis": "3€"
-        },
-        {
-            "id": 2,
-            "name": "Cola",
-            "groesse": "0.3",
-            "preis": "3€"
-        },
-        {
-            "id": 3,
-            "name": "Fanta",
-            "groesse": "0.5",
-            "preis": "3€"
-        },
-        {
-            "id": 4,
-            "name": "Alster",
-            "groesse": "0.5",
-            "preis": "3€"
-        }
-    ]
-}
+[
+    {
+        "id": 1,
+        "name": "Cola",
+        "groesse": "500",
+        "preis": "3€"
+    },
+    {
+        "id": 2,
+        "name": "Cola",
+        "groesse": "300",
+        "preis": "3€"
+    },
+    {
+        "id": 3,
+        "name": "Fanta",
+        "groesse": "500",
+        "preis": "3€"
+    },
+    {
+        "id": 4,
+        "name": "Alster",
+        "groesse": "500",
+        "preis": "3€"
+    }
+]

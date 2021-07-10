@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "tisch_id": 2,
+        "zeitpunkt_vorbereitet": "1980-02-01T11:45:56.000+00:00"
+    },
+    {
+        "id": 2,
+        "tisch_id": 3,
+        "zeitpunkt_vorbereitet": "1980-02-01T11:50:56.000+00:00"
+    },
+    {
+        "id": 3,
+        "tisch_id": 4,
+        "zeitpunkt_vorbereitet": "1980-02-01T11:49:56.000+00:00"
+    },
+    {
+        "id": 4,
+        "tisch_id": 5,
+        "zeitpunkt_vorbereitet": "1980-02-01T11:49:06.000+00:00"
+    },
+    {
+        "id": 5,
+        "tisch_id": 6,
+        "zeitpunkt_vorbereitet": "1980-02-01T11:59:56.000+00:00"
+    }
+]

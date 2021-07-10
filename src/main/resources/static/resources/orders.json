@@ -1,40 +1,44 @@
-{
-    "bestellungen": [
-        {
-            "id": 1,
-            "tischId": 1,
-            "getraenkname": "Cola",
-            "getraenkgroesse": 0.5
-        },
-        {
-            "id": 2,
-            "tischId": 1,
-            "getraenkname": "Fanta",
-            "getraenkgroesse": 0.5
-        },
-        {
-            "id": 3,
-            "tischId": 2,
-            "getraenkname": "Weizen",
-            "getraenkgroesse": 0.5
-        },
-        {
-            "id": 4,
-            "tischId": 3,
-            "getraenkname": "Sprite",
-            "getraenkgroesse": 0.5
-        },
-        {
-            "id": 5,
-            "tischId": 4,
-            "getraenkname": "Wasser",
-            "getraenkgroesse": 0.5
-        },
-        {
-            "id": 6,
-            "tischId": 5,
-            "getraenkname": "OSaft",
-            "getraenkgroesse": 0.5
-        }
-    ]
-}
+[
+    {
+        "id": 1,
+        "tisch_id": 1,
+        "getraenkname": "Cola",
+        "getraengroesse": 500,
+        "status":1
+    },
+    {
+        "id": 2,
+        "tisch_id": 1,
+        "getraenkname": "Fanta",
+        "getraengroesse": 500,
+        "status":1
+    },
+    {
+        "id": 3,
+        "tisch_id": 2,
+        "getraenkname": "Weizen",
+        "getraengroesse": 500,
+        "status":1
+    },
+    {
+        "id": 4,
+        "tisch_id": 3,
+        "getraenkname": "Sprite",
+        "getraengroesse": 500,
+        "status":1
+    },
+    {
+        "id": 5,
+        "tisch_id": 4,
+        "getraenkname": "Wasser",
+        "getraengroesse": 500,
+        "status":1
+    },
+    {
+        "id": 6,
+        "tisch_id": 5,
+        "getraenkname": "OSaft",
+        "getraengroesse": 500,
+        "status":1
+    }
+]

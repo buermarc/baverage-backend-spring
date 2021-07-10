@@ -90,7 +90,7 @@ body {
 
 /* Page_table*/
 #page_table {
-    display: none;
+    display: block;
 }
 
 #table_number {
@@ -147,7 +147,7 @@ body {
 
 /* Page_order*/
 #page_order {
-    display: none;
+    display: block;
 }
 
 #spot_header {

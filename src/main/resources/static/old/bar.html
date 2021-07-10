@@ -1,0 +1,79 @@
+<script src="old/js/timer.js"></script>
+<script src="old/js/bar.js"></script>
+<html>
+    <head>
+        <title>Bar-Frontend</title>
+        <link rel="stylesheet" href="old/css/bar.css">
+        <meta charset="utf-8">
+        <!--
+            Das Bar-Frontend ist eine einzelne Seite auf der für den Bartender übersichtlich alle eingehenden Bestellungen nach dem FiFo Prinzip dargestellt werden.
+            Zusätzlich werden die Bestellungen nach Tisch gruppiert, sodass ein einzelner Tisch immer möglichst gleichzeitig abgearbeitet werden kann.
+            Als Basisstruktur dient der Seite eine große Tabelle mit Rowspan 2 in der ersten Spalte. Es können Bestellungen der nächsten 4 Tische gleichzeitig angezeigt werden.
+            Sobald der Bartender ein Getränk vorbereitet hat muss der physische RFID-Tag auf einen Reader gestellt werden und durch das anklicken der Bestelung mit dieser verknüpft werden. 
+        -->
+    </head>
+    <body>
+        <!-- Tabelle stellt 100% der Seite dar und hat keinen Abstand zwischen den einzelnen Zellen -->
+        <table cellspacing="0" cellpadding="0">
+            <!-- Obere Zeile -->
+            <tr id="toprow">
+                <!-- Lieferübersicht-Spalte erstreckt sich über beide Zeilen -->
+                <td rowspan="2" id="deliver">
+                    <div id="delivery_items">
+                        <div class="order_tablenumber">Liefern</div>
+                        <!-- Template für eine Lieferung -->
+                        <template id="outgoing_delivery">
+                            <div class="outgoing_delivery">
+                                <span class="outgoing_tablenumber">Tisch 1</span>
+                                <span class="deliverytime"><span>00</span>:<span>00</span></span>
+                            </div>
+                        </template>
+                    </div>
+                </td>
+                <!-- 4 Spalten für anstehende Bestellungen -->
+                <td class="order">
+                    <!-- Offene Bestellungen 1 werden hier generiert -->
+                    <div class="order_top" id="toDo1"></div>
+                </td>
+                <td class="order">
+                    <!-- Offene Bestellungen 2 werden hier generiert -->
+                    <div class="order_top" id="toDo2"></div>
+                </td>
+                <td class="order">
+                    <!-- Offene Bestellungen 3 werden hier generiert -->
+                    <div class="order_top" id="toDo3"></div>
+                </td>
+                <td class="order">
+                    <!-- Offene Bestellungen 4 werden hier generiert -->
+                    <div class="order_top" id="toDo4"></div>
+                </td>
+            </tr>
+            <!-- Untere Zeile -->
+            <tr id="bottomrow">
+                <!-- 4 Spalten für bereits vorbereitete Getränke -->
+                <td class="order">
+                    <div class="order_bottom" id="done1">
+                        <!-- Bereits vorbereitete Bestellungen 1 werden hier generiert -->
+                    </div>
+                </td>
+                <td class="order">
+                    <div class="order_bottom" id="done2">
+                        <!-- Bereits vorbereitete Bestellungen 2 werden hier generiert -->
+                    </div>
+                </td>
+                <td class="order">
+                    <div class="order_bottom" id="done3">
+                        <!-- Bereits vorbereitete Bestellungen 3 werden hier generiert -->
+                    </div>
+                </td>
+                <td class="order">
+                    <div class="order_bottom" id="done4">
+                        <!-- Bereits vorbereitete Bestellungen 4 werden hier generiert -->
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <!-- RFID Status Symbol-->
+        <div id="rfid_status"></div>
+    </body>
+</html>

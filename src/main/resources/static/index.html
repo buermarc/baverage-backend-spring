@@ -1,9 +1,48 @@
 <html>
 <head>
-    <title>Unsere tollen Frontends</title>
+    <title>Beverage Monitoring</title>
+    <link rel="stylesheet" href="./css/bar.css">
+    <link rel="stylesheet" href="./css/service.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/App.js"></script>
+    <script src="./js/PageOverview.js"></script>
+    <script src="./js/PageTable.js"></script>
+    <script src="./js/PageOrder.js"></script>
+    <script src="./js/PageBar.js"></script>
+    <script src="./js/PageStart.js"></script>
+    <script src="./js/Timer.js"></script>
+    <script src="./js/Helper.js"></script>
+    <script type="text/javascript">
+        //All available pages
+        let pages = [
+        {
+            url:"/",
+            class: PageStart
+        },
+        {
+            url:"/bar",
+            class: PageBar
+        },
+        {
+            url:"/service", 
+            class: PageOverview
+        },
+        {
+            url: "/tableView",
+            class: PageTable
+        },
+        {
+            url:"/orderView",
+            class: PageOrder
+        }
+        ];
+        //On page load start app.js / App()
+        window.addEventListener("load", () => {
+            let app = new App(pages);
+            app.run();
+        });
+    </script>
 </head>
-<body>
-    <a href="bar.html">Bar-Frontend</a>
-    <a href="service.html">Service-Frontend</a>
+<body id="content">
 </body>
 </html>
