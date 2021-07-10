@@ -45,7 +45,7 @@ public class BarWebSocketHandler extends TextWebSocketHandler {
 
     MqttClient initClient() throws MqttException {
 
-        LOGGER.error("Server name that was loaded is: {}:{}", this.mqttServerAddress, this.mqttServerPort);
+        LOGGER.debug("Server name that was loaded is: {}:{}", this.mqttServerAddress, this.mqttServerPort);
 
         client = new MqttClient("tcp://" + this.mqttServerAddress + ":" + this.mqttServerPort, MqttClient.generateClientId());
         client.setCallback(new MqttCallback() {
