@@ -27,7 +27,6 @@ import java.lang.Iterable;
 import com.baverage.backend.repo.BestellungRepo;
 import com.baverage.backend.repo.GetraenkRepo;
 import com.baverage.backend.repo.KundeRepo;
-import com.baverage.backend.repo.TestTableRepo;
 import com.baverage.backend.service.KundeService;
 import com.baverage.backend.service.BestellungService;
 import com.baverage.backend.repo.TischRepo;
@@ -40,7 +39,6 @@ import com.baverage.backend.databaseConnection.Bestellungen;
 import com.baverage.backend.databaseConnection.Kunden;
 import com.baverage.backend.databaseConnection.Getraenke;
 import com.baverage.backend.databaseConnection.Glaeser;
-import com.baverage.backend.databaseConnection.TestTable;
 import com.baverage.backend.databaseConnection.Tische;
 import com.baverage.backend.databaseConnection.Stati;
 import com.baverage.backend.dto.CreateUserRequest;
@@ -76,9 +74,6 @@ public class CustomRestController {
 
     @Autowired
     private GetraenkRepo getraenkRepo;
-
-    @Autowired
-    private TestTableRepo testTableRepo;
 
     @GetMapping(value = "/getOffeneBestellungen")
     public @ResponseBody Iterable<OffeneBestellung> aktiveBestellungen(Model model) {
@@ -252,17 +247,5 @@ public class CustomRestController {
     @GetMapping(value = "/getID")
     public @ResponseBody Iterable<Bestellungen> getID(Model model) {
         return this.bestellungRepo.getID();
-    }
-
-    @GetMapping(path = "/all")
-    public @ResponseBody Iterable<TestTable> getAll() {
-        // This returns a JSON or XML with the users
-        return this.testTableRepo.findAll();
-    }
-
-    @GetMapping(path = "/allTables")
-    public @ResponseBody Collection<TestTable> getAllTables() {
-        // This returns a JSON or XML with the users
-        return this.testTableRepo.getAllTables();
     }
 }
