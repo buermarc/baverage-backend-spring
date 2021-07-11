@@ -13,6 +13,10 @@ class PageOverview {
         this.generateDeliveries();
         this.generateTableOverview();
         this.setClickListener()
+        setInterval(() => { //Lieferungen und Tischübersicht alle 10 Sekunden aktualisieren
+            this.generateDeliveries();
+            this.generateTableOverview();
+        }, 10000) //10 Sekunden warten
     }
 
     setClickListener = () => {

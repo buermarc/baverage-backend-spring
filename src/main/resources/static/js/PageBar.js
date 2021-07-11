@@ -34,7 +34,6 @@ class PageBar {
             console.log("Found a bottle with the rfid: " + event.data);
             this.updateRfidConnection(true); //RFID Verbindungsanzeige grün schalten
         });
-        
 
         setInterval(() => { 
             this.updateRfidConnection(false); //RFID Verbindungsanzeige Rot setzen

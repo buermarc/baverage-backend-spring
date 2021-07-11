@@ -26,8 +26,8 @@ class PageTable {
     openTableOverview = (tisch_id) => {
         console.log("Showing Table " + tisch_id);
         document.getElementById("table_number").innerHTML = "Tisch " + tisch_id; //Überschrift an Tisch ID anpassen
-        fetch("./resources/tisch.json").then( //Test ohne MySQL Backend
-    //    fetch("./api/getTisch?id="+tisch_id).then( //Tisch von Spring Endpoint abrufen
+        //fetch("./resources/tisch.json").then( //Test ohne MySQL Backend
+        fetch("./api/getTisch?id="+tisch_id).then( //Tisch von Spring Endpoint abrufen
             response => {return response.json();} //Response zu JSON parsen
         ).then(
             data => {
