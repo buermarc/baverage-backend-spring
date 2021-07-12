@@ -18,7 +18,7 @@ Cloud. To configure the backend we use environment Variables as seen in
 - ${MQTT_SA} - MQTT Server Address
 - ${MQTT_SP} - MQTT Server Port
 - ${MYSQL_SA} - MYSQL Server Address
-- ${MYSQL_SP} - MYSQL Server port
+- ${MYSQL_SP} - MYSQL Server Port
 - ${MYSQL_U} - MYSQL  Username
 - ${MYSQL_P} - MYSQL Password
 
